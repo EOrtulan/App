@@ -1,4 +1,4 @@
-const express  = require('express');
+const express = require('express');
 const Routes = require('../routes');
 const errorHandler = require('../middlewares/error.handler');
 

@@ -1,9 +1,8 @@
 const { Router } = require('express');
-const userRoute = require('../controllers/user.controller');
-const loginValidate = require('../middlewares/login.validate');
+const userRoute = require('./userRoute/index');
 
 const Routes = Router();
 
-Routes.use('/login',loginValidate, userRoute);
+Routes.use('/login', userRoute);
 
 module.exports = Routes;
