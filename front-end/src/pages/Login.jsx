@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import login from '../service/api';
 
 function LoginPage() {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -10,7 +11,6 @@ function LoginPage() {
   const [data, setData] = useState({});
 
   async function onSubmitButton() {
-    const navigate = useNavigate;
     const response = await login(user.email, user.password);
     setData(response);
     if (response.token) {
