@@ -4,7 +4,7 @@ const api = axios.create({
   baseURL: 'http://localhost:3001',
 });
 
-const login = async (email, password) => {
+export const login = async (email, password) => {
   const response = await api({
     method: 'POST',
     url: '/login',
@@ -16,4 +16,15 @@ const login = async (email, password) => {
   return response.data;
 };
 
-export default login;
+export const register = async (name, email, password) => {
+  const response = await api({
+    method: 'POST',
+    url: '/register',
+    data: {
+      name,
+      email,
+      password,
+    },
+  });
+  return response;
+};
