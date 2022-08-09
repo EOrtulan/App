@@ -1,8 +1,10 @@
 const { Router } = require('express');
-const userRoute = require('./userRoute/index');
+const loginRoute = require('./login/index');
+const registerRoute = require('./register/index');
 
 const Routes = Router();
 
-Routes.use('/login', userRoute);
+Routes.use('/register', registerRoute);
+Routes.use('/login', loginRoute);
 
 module.exports = Routes;
