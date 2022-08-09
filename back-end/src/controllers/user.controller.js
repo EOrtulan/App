@@ -2,7 +2,8 @@ const { login } = require('../services/user.service');
 
 const validLogin = async (req, res, next) => {
   try {
-    const result = await login(req.body.email, req.body.password);
+    const { email, password } = req.body;
+    const result = await login(email, password);
     return res.status(200).json(result);
   } catch (error) {
     next(error);
