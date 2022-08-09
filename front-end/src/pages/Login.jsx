@@ -8,21 +8,24 @@ function LoginPage() {
     email: '',
     password: '',
   });
-  const [data, setData] = useState({});
+  const [notFoundEmail, setNotFoundEmail] = useState(false);
 
   async function onSubmitButton() {
-    const response = await login(user.email, user.password);
-    setData(response);
-    if (response.token) {
-      if (response.role === 'administrator') {
-        navigate('/admin/manage');
+    try {
+      const response = await login(user.email, user.password);
+      if (response.token) {
+        if (response.role === 'administrator') {
+          navigate('/admin/manage');
+        }
+        if (response.role === 'seller') {
+          navigate('/seller/orders');
+        }
+        if (response.role === 'customer') {
+          navigate('/customer/products');
+        }
       }
-      if (response.role === 'seller') {
-        navigate('/seller/orders');
-      }
-      if (response.role === 'customer') {
-        navigate('/customer/products');
-      }
+    } catch (err) {
+      setNotFoundEmail(true);
     }
   }
 
@@ -83,10 +86,10 @@ function LoginPage() {
         </button>
       </div>
       {
-        data.message
+        notFoundEmail
         && (
           <alert data-testid="common_login__element-invalid-email">
-            {data.message}
+            404 - Email not found
           </alert>
         )
       }
