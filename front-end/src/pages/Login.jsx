@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import login from '../service/api';
+import { login } from '../service/api';
+import dataValidator from '../utils';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -27,12 +28,6 @@ function LoginPage() {
     } catch (err) {
       setNotFoundEmail(true);
     }
-  }
-
-  function dataValidator(email, password) {
-    const SIX = 6;
-    const validateMailRegex = /\S+@\S+\.\S+/;
-    if (!validateMailRegex.test(email) || password.length < SIX) return true;
   }
 
   return (
@@ -81,6 +76,7 @@ function LoginPage() {
         <button
           type="button"
           data-testid="common_login__button-register"
+          onClick={ () => navigate('/register') }
         >
           Ainda não tenho conta
         </button>
@@ -89,7 +85,7 @@ function LoginPage() {
         notFoundEmail
         && (
           <alert data-testid="common_login__element-invalid-email">
-            404 - Email not found
+            Email not found
           </alert>
         )
       }
