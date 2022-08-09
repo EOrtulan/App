@@ -10,4 +10,17 @@ const validLogin = async (req, res, next) => {
   }
 };
 
-module.exports = validLogin;
+const create = async (req, res, next) => {
+  try {
+    const { email, password, nome } = req.body;
+    const result = await create(email, password, nome);
+    return res.status(201).json({ ok: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  validLogin,
+  create,
+};
