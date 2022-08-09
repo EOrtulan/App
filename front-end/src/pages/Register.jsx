@@ -71,7 +71,7 @@ function Register() {
         <button
           type="button"
           data-testid="common_register__button-register"
-          disabled={ dataValidator(user.email, user.password) }
+          disabled={ dataValidator(user.email, user.password, user.name) }
           onClick={ buttonRegister }
         >
           Cadastrar
