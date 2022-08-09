@@ -1,17 +1,17 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
-const key = fs.readFileSync('../../jwt.evaluation.key');
-
 const jwtConfig = {
   // expiresIn: '15m',
   algorithm: 'HS256',
 };
 
 const generateJWT = (payload) => {
+  const secretKey = fs.readFileSync('jwt.evaluation.key', 'utf-8');
+
   const token = jwt.sign(
     { data: payload }, 
-    key || 'hulkEsmaga', 
+    secretKey || 'hulkEsmaga', 
     jwtConfig,
   );
   return token;
