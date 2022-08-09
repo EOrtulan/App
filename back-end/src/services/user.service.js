@@ -21,7 +21,7 @@ const login = async (email, pass) => {
 const register = async (name, email, password) => {
   const user = await getUserByEmail(email);
 
-  if (user) throw ErrorConstructor(422, 'Email already exist');
+  if (user) throw ErrorConstructor(409, 'Email already exist');
 
   const passCrypt = md5(password);
   await create(name, email, passCrypt);
