@@ -1,11 +1,7 @@
 const { products } = require('../database/models');
 
-const getAllProducts = async (email) => {
-  const AllProducts = await products.find({
-    where: {
-      email,
-    },
-  });
+const getAllProducts = async () => {
+  const AllProducts = await products.findAll();
 
   return AllProducts;
 };
