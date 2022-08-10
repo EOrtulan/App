@@ -13,11 +13,12 @@ function Register() {
   });
 
   const buttonRegister = async () => {
-    const TWO_HUNDRED_ONE = 201;
-    const response = await register(user.name, user.email, user.password);
-    if (response.status === TWO_HUNDRED_ONE) {
+    try {
+      await register(user.name, user.email, user.password);
       navigate('/login');
-    } else { setErrorRegister(true); }
+    } catch (err) {
+      setErrorRegister(true);
+    }
   };
 
   return (
