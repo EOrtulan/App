@@ -15,7 +15,7 @@ function Register() {
   const buttonRegister = async () => {
     try {
       await register(user.name, user.email, user.password);
-      navigate('/login');
+      navigate('/customer/products');
     } catch (err) {
       setErrorRegister(true);
     }
