@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from '../components/Header';
 
-function OrderDetails() {
+function Checkout() {
   return (
     <div>
       <Header />
-      Order Details
+      Checkout
     </div>
   );
 }
 
-export default OrderDetails;
+export default Checkout;
