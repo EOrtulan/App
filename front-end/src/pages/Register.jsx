@@ -15,7 +15,6 @@ function Register() {
   const buttonRegister = async () => {
     const TWO_HUNDRED_ONE = 201;
     const response = await register(user.name, user.email, user.password);
-    console.log(response.status);
     if (response.status === TWO_HUNDRED_ONE) {
       navigate('/login');
     } else { setErrorRegister(true); }
