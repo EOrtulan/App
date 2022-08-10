@@ -14,6 +14,7 @@ function LoginPage() {
   async function onSubmitButton() {
     try {
       const response = await login(user.email, user.password);
+      localStorage.setItem('user', JSON.stringify(response));
       if (response.token) {
         if (response.role === 'administrator') {
           navigate('/admin/manage');
