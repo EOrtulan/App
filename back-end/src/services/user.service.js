@@ -26,11 +26,9 @@ const register = async (name, email, password) => {
   if (user) throw ErrorConstructor(409, 'Email already exist');
 
   const passCrypt = md5(password);
-  await create(name, email, passCrypt);
+  const result = await create(name, email, passCrypt);
 
-  return {
-    message: 'Successfully registered',
-  };
+  return result;
 };
 
 module.exports = { 

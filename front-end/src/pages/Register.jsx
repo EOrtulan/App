@@ -12,12 +12,13 @@ function Register() {
     password: '',
   });
 
-  const buttonRegister = () => {
-    const TWO_HUNDRED_ONE = 201;
-    const response = register(user.name, user.email, user.password);
-    if (response.status === TWO_HUNDRED_ONE) {
-      navigate('/login');
-    } else { setErrorRegister(true); }
+  const buttonRegister = async () => {
+    try {
+      await register(user.name, user.email, user.password);
+      navigate('/customer/products');
+    } catch (err) {
+      setErrorRegister(true);
+    }
   };
 
   return (
