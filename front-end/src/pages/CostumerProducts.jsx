@@ -19,7 +19,7 @@ function Products() {
   }, []);
 
   const setQuantidadeMais = (prod) => {
-    // let quantidade = 0;
+    // let quantity = 0;
     setProdutos([...produtos, { ...prod, quantidade: prod.quantidade += 1 }]);
     console.log(produtos);
     // console.log(prod);
