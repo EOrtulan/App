@@ -1,39 +1,57 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MyContext from '../store';
 import { api } from '../service/api';
 import Header from '../components/Header';
 
 function Products() {
+  const navigate = useNavigate();
   const { produtos, setProdutos } = useContext(MyContext);
   const [card, setCard] = useState([]);
+  const [input, setInput] = useState({});
 
   useEffect(() => {
     const getProducts = async () => {
-      api.get('/products').then((res) => {
-        setCard(
-          res.data.map((prod) => ({ ...prod, quantidade: 0 })),
-        );
-      });
+      const { data } = await api.get('/products');
+      const newData = data.map((item) => ({ ...item, quantity: 0 }));
+      setCard(newData);
+      setProdutos(newData);
     };
     getProducts();
   }, []);
 
+  const valueCar = () => {
+    let total = 0;
+    produtos.forEach((item) => {
+      total += item.quantity * item.price;
+    });
+    return total;
+  };
+
   const setQuantidadeMais = (prod) => {
-    // let quantity = 0;
-    setProdutos([...produtos, { ...prod, quantidade: prod.quantidade += 1 }]);
-    console.log(produtos);
-    // console.log(prod);
+    const newProducts = [...produtos];
+    const index = newProducts.findIndex((item) => item.id === prod.id);
+    newProducts[index].quantity += 1;
+    setProdutos(newProducts);
   };
 
   const setQuantidadeMenos = (prod) => {
-    setProdutos([...produtos, { ...prod,
-      quantidade: (prod.quantidade > 0) ? prod.quantidade -= 1 : 0 }]);
-    console.log(produtos);
+    if (prod.quantity > 0) {
+      const newProducts = [...produtos];
+      const index = newProducts.findIndex((item) => item.id === prod.id);
+      newProducts[index].quantity -= 1;
+      setProdutos(newProducts);
+    }
   };
 
-  const handleChange = (e, prod) => {
-    setProdutos([...produtos, { ...prod, quantidade: e.target.value }]);
-    console.log(produtos);
+  const inputQuantidade = (e) => {
+    const { name, value } = e.target;
+    const newProducts = [...produtos];
+    const index = newProducts.findIndex((item) => item.id === Number(name));
+    newProducts[index].quantity = Number(value);
+    setProdutos(newProducts);
+    const newInput = { ...input, [name]: value };
+    setInput(newInput);
   };
 
   return (
@@ -47,17 +65,15 @@ function Products() {
                 {prod.name}
               </div>
               <img
-                data-testid={ `customer_products__img-card-bg-image-${prod.id}` }
+                data-testid={ `customer_products__button-card-rm-item-${prod.id}` }
                 src={ prod.urlImage }
                 height="50px"
                 width="50px"
                 alt={ prod.name }
               />
-              <div>
+              <div data-testid={ `customer_products__element-card-price-${prod.id}` }>
                 R$
-                <span data-testid={ `customer_products__element-card-price-${prod.id}` }>
-                  { prod.price.replace(/\./, ',') }
-                </span>
+                { Number(prod.price).toFixed(2) }
               </div>
               <button
                 data-testid={ `customer_products__button-card-rm-item-${prod.id}` }
@@ -67,12 +83,11 @@ function Products() {
                 -
               </button>
               <input
-                maxLength="10px"
                 data-testid={ `customer_products__input-card-quantity-${prod.id}` }
-                type="text"
-                min={ 0 }
-                value={ prod.quantidade }
-                onChange={ (e) => handleChange(e, prod) }
+                type="number"
+                name={ prod.id }
+                value={ input[prod.id] ? input[prod.id] : '' }
+                onChange={ inputQuantidade }
               />
               <button
                 data-testid={ `customer_products__button-card-add-item-${prod.id}` }
@@ -87,8 +102,10 @@ function Products() {
         <button
           data-testid="customer_products__button-cart"
           type="button"
+          onClick={ () => navigate('/customer/checkout') }
         >
           Ver Carrinho: R$
+          { valueCar() }
         </button>
       </div>
     </div>

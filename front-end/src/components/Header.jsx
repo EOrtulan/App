@@ -13,7 +13,6 @@ function Header() {
   };
 
   useEffect(() => {
-    // console.log('routes', authToken());
     getDataUser();
   }, []);
 
