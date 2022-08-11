@@ -1,6 +1,7 @@
 import decode from 'jwt-decode';
 
 const authToken = () => {
+  const THOUSAND = 1000;
   const user = localStorage.getItem('user');
   if (!user) {
     return false;
@@ -12,11 +13,11 @@ const authToken = () => {
   }
   const tokenDecoded = decode(token);
   console.log(tokenDecoded);
-  if (tokenDecoded.exp <= Math.floor(new Date() / 1000)) {
+  if (tokenDecoded.exp <= Math.floor(new Date() / THOUSAND)) {
     localStorage.removeItem('user');
     return false;
   }
-  if (tokenDecoded.exp > Math.floor(new Date() / 1000)) {
+  if (tokenDecoded.exp > Math.floor(new Date() / THOUSAND)) {
     return { status: true, role: tokenDecoded.data.role };
   }
 };

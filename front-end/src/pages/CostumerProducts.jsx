@@ -13,11 +13,13 @@ function Products() {
       const { data } = await api.get('/products');
       const newData = data.map((item) => ({ ...item, quantity: 0 }));
       setCard(newData);
+      console.log('input', card);
       setProdutos(newData);
-      const newDadosInput = produtos.map((item) => (
+      console.log('input', produtos);
+      const newDadosInput = data.map((item) => (
         { id: item.id, quantity: 0 }));
       setInputNumber(newDadosInput);
-      console.log('input', inputNumber);
+      console.log('input', inputNumber[0]);
     };
     getProducts();
   }, []);
@@ -49,9 +51,9 @@ function Products() {
   };
 
   const inputQuantidade = (e) => {
-    // const { name, value } = e.target;
-    // console.log(name, value);
-    console.log('input', inputNumber);
+    const { name, value } = e.target;
+    console.log(name, value);
+    console.log('input', inputNumber[0]);
     // console.log(inputNumber[name]);
     // setInputNumber([...inputNumber, { inputNumber[name]:value]});
   };
