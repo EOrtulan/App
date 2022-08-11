@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const Routes = require('../routes');
 const errorHandler = require('../middlewares/error.handler');
 const {
@@ -10,6 +11,8 @@ const {
 const app = express();
 
 app.use(cors());
+
+const dirname = path.join('..', 'assets', 'images', 'public');
 
 app.use(express.json());
 
