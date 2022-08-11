@@ -5,25 +5,55 @@ import Header from '../components/Header';
 
 function Products() {
   const { produtos, setProdutos } = useContext(MyContext);
-  const [ card, setCard ] = useState([]);
+  const [card, setCard] = useState([]);
+  const [inputNumber, setInputNumber] = useState([]);
 
   useEffect(() => {
     const getProducts = async () => {
       const { data } = await api.get('/products');
-      setCard(data);
+      const newData = data.map((item) => ({ ...item, quantity: 0 }));
+      setCard(newData);
+      setProdutos(newData);
+      const newDadosInput = produtos.map((item) => (
+        { id: item.id, quantity: 0 }));
+      setInputNumber(newDadosInput);
+      console.log('input', inputNumber);
     };
     getProducts();
   }, []);
 
+  const valueCar = () => {
+    let total = 0;
+    produtos.forEach((item) => {
+      total += item.quantity * item.price;
+    });
+    return total;
+  };
+
   const setQuantidadeMais = (prod) => {
-    // let quantidade = 0;
-    setProdutos([...produtos, { ...prod, quantidade: prod.quantidade += 1 }]);
+    const newProducts = [...produtos];
+    const index = newProducts.findIndex((item) => item.id === prod.id);
+    newProducts[index].quantity += 1;
+    setProdutos(newProducts);
     console.log(produtos);
-    console.log(prod);
   };
 
   const setQuantidadeMenos = (prod) => {
-    console.log(prod);
+    if (prod.quantity > 0) {
+      const newProducts = [...produtos];
+      const index = newProducts.findIndex((item) => item.id === prod.id);
+      newProducts[index].quantity -= 1;
+      setProdutos(newProducts);
+      console.log(produtos);
+    }
+  };
+
+  const inputQuantidade = (e) => {
+    // const { name, value } = e.target;
+    // console.log(name, value);
+    console.log('input', inputNumber);
+    // console.log(inputNumber[name]);
+    // setInputNumber([...inputNumber, { inputNumber[name]:value]});
   };
 
   return (
@@ -55,9 +85,12 @@ function Products() {
                 -
               </button>
               <input
-                maxLength="10px"
                 data-testid={ `customer_products__input-card-quantity-${prod.id}` }
-                type="text"
+                type="number"
+                name={ prod.id }
+                value={ inputNumber[prod.id] }
+                min="0"
+                onChange={ inputQuantidade }
               />
               <button
                 data-testid={ `customer_products__button-card-add-item-${prod.id}` }
@@ -74,6 +107,7 @@ function Products() {
           type="button"
         >
           Ver Carrinho: R$
+          { valueCar() }
         </button>
       </div>
     </div>

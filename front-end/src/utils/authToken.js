@@ -1,22 +1,24 @@
 import decode from 'jwt-decode';
 
 const authToken = () => {
-  const storage = localStorage.getItem('user');
-  const { token } = JSON.parse(storage);
-  console.log(token);
-  const tokenDecoded = decode(token);
-  console.log(tokenDecoded);
-  console.log(tokenDecoded.exp <= Math.floor(new Date() / 1000));
-  if (tokenDecoded.exp <= Math.floor(new Date() / 1000)) {
+  const user = localStorage.getItem('user');
+  if (!user) {
     return false;
   }
-  if (!tokenDecoded.exp <= Math.floor(new Date() / 1000)) {
-    return true;
+  const { token } = JSON.parse(user);
+  if (!token) {
+    localStorage.removeItem('user');
+    return false;
   }
-  // iat
-  // if (token) {
-
-  // }
+  const tokenDecoded = decode(token);
+  console.log(tokenDecoded);
+  if (tokenDecoded.exp <= Math.floor(new Date() / 1000)) {
+    localStorage.removeItem('user');
+    return false;
+  }
+  if (tokenDecoded.exp > Math.floor(new Date() / 1000)) {
+    return { status: true, role: tokenDecoded.data.role };
+  }
 };
 
 export default authToken;
