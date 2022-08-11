@@ -6,7 +6,7 @@ import Header from '../components/Header';
 function Products() {
   const { produtos, setProdutos } = useContext(MyContext);
   const [card, setCard] = useState([]);
-  const [inputNumber, setInputNumber] = useState([]);
+  const [input, setInput] = useState({});
 
   useEffect(() => {
     const getProducts = async () => {
@@ -14,10 +14,6 @@ function Products() {
       const newData = data.map((item) => ({ ...item, quantity: 0 }));
       setCard(newData);
       setProdutos(newData);
-      const newDadosInput = produtos.map((item) => (
-        { id: item.id, quantity: 0 }));
-      setInputNumber(newDadosInput);
-      console.log('input', inputNumber);
     };
     getProducts();
   }, []);
@@ -49,11 +45,16 @@ function Products() {
   };
 
   const inputQuantidade = (e) => {
-    // const { name, value } = e.target;
-    // console.log(name, value);
-    console.log('input', inputNumber);
-    // console.log(inputNumber[name]);
-    // setInputNumber([...inputNumber, { inputNumber[name]:value]});
+    const { name, value } = e.target;
+    console.log(typeof name);
+    const newProducts = [...produtos];
+    const index = newProducts.findIndex((item) => item.id === Number(name));
+    console.log(index);
+    newProducts[index].quantity = Number(value);
+    setProdutos(newProducts);
+    const newInput = { ...input, [name]: value };
+    console.log(name, value);
+    setInput(newInput);
   };
 
   return (
@@ -88,8 +89,7 @@ function Products() {
                 data-testid={ `customer_products__input-card-quantity-${prod.id}` }
                 type="number"
                 name={ prod.id }
-                value={ inputNumber[prod.id] }
-                min="0"
+                value={ input[prod.id] ? input[prod.id] : '' }
                 onChange={ inputQuantidade }
               />
               <button
