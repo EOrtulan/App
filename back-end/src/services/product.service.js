@@ -1,8 +1,8 @@
 const ErrorConstructor = require('../helpers/erroConstructor');
 const productRepository = require('../repository/product.repository');
 
-const getAllProducts = async () => {
-  const products = await productRepository.getAllProducts();
+const getAll = async () => {
+  const products = await productRepository.getAll();
 
   if (!products) throw ErrorConstructor(404, 'Products not found!');
 
@@ -10,5 +10,5 @@ const getAllProducts = async () => {
 };
 
 module.exports = {
-  getAllProducts,
+  getAll,
 };
