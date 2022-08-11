@@ -5,12 +5,15 @@ import Header from '../components/Header';
 
 function Products() {
   const { produtos, setProdutos } = useContext(MyContext);
-  const [ card, setCard ] = useState([]);
+  const [card, setCard] = useState([]);
 
   useEffect(() => {
     const getProducts = async () => {
-      const { data } = await api.get('/products');
-      setCard(data);
+      api.get('/products').then((res) => {
+        setCard(
+          res.data.map((prod) => ({ ...prod, quantidade: 0 })),
+        );
+      });
     };
     getProducts();
   }, []);
@@ -19,11 +22,18 @@ function Products() {
     // let quantidade = 0;
     setProdutos([...produtos, { ...prod, quantidade: prod.quantidade += 1 }]);
     console.log(produtos);
-    console.log(prod);
+    // console.log(prod);
   };
 
   const setQuantidadeMenos = (prod) => {
-    console.log(prod);
+    setProdutos([...produtos, { ...prod,
+      quantidade: (prod.quantidade > 0) ? prod.quantidade -= 1 : 0 }]);
+    console.log(produtos);
+  };
+
+  const handleChange = (e, prod) => {
+    setProdutos([...produtos, { ...prod, quantidade: e.target.value }]);
+    console.log(produtos);
   };
 
   return (
@@ -37,15 +47,17 @@ function Products() {
                 {prod.name}
               </div>
               <img
-                data-testid={ `customer_products__button-card-rm-item-${prod.id}` }
+                data-testid={ `customer_products__img-card-bg-image-${prod.id}` }
                 src={ prod.urlImage }
                 height="50px"
                 width="50px"
                 alt={ prod.name }
               />
-              <div data-testid={ `customer_products__element-card-price-${prod.id}` }>
+              <div>
                 R$
-                { Number(prod.price).toFixed(2) }
+                <span data-testid={ `customer_products__element-card-price-${prod.id}` }>
+                  { prod.price.replace(/\./, ',') }
+                </span>
               </div>
               <button
                 data-testid={ `customer_products__button-card-rm-item-${prod.id}` }
@@ -58,6 +70,9 @@ function Products() {
                 maxLength="10px"
                 data-testid={ `customer_products__input-card-quantity-${prod.id}` }
                 type="text"
+                min={ 0 }
+                value={ prod.quantidade }
+                onChange={ (e) => handleChange(e, prod) }
               />
               <button
                 data-testid={ `customer_products__button-card-add-item-${prod.id}` }

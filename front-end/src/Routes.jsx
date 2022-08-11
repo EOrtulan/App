@@ -6,9 +6,9 @@ import Products from './pages/CostumerProducts';
 import MyRequests from './pages/CostumerRequests';
 import Checkout from './pages/CostumerCheckout';
 import OrderDetails from './pages/CostumerOrderDetails';
-import authToken from './utils/authToken';
+// import authToken from './utils/authToken';
 
-function AppRoutes({ children }) {
+function AppRoutes(/** { children } */) {
   // function rotaAuth() {
   //   console.log('entrou', authToken());
   //   return authToken() ? (children) : <Navigate to="/login" replace />;

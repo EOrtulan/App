@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../service/api';
+import { setItemLocalStorage } from '../service/helpers';
 import dataValidator from '../utils';
 
 function LoginPage() {
@@ -14,7 +15,7 @@ function LoginPage() {
   async function onSubmitButton() {
     try {
       const response = await login(user.email, user.password);
-      localStorage.setItem('user', JSON.stringify(response));
+      setItemLocalStorage('user', JSON.stringify(response));
       if (response.token) {
         if (response.role === 'administrator') {
           navigate('/admin/manage');
