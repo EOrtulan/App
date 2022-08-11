@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MyContext from '../store';
 import { api } from '../service/api';
 import Header from '../components/Header';
 
 function Products() {
+  const navigate = useNavigate();
   const { produtos, setProdutos } = useContext(MyContext);
   const [card, setCard] = useState([]);
   const [input, setInput] = useState({});
@@ -100,6 +102,7 @@ function Products() {
         <button
           data-testid="customer_products__button-cart"
           type="button"
+          onClick={ () => navigate('/customer/checkout') }
         >
           Ver Carrinho: R$
           { valueCar() }
