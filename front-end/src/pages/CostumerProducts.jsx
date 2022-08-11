@@ -31,7 +31,6 @@ function Products() {
     const index = newProducts.findIndex((item) => item.id === prod.id);
     newProducts[index].quantity += 1;
     setProdutos(newProducts);
-    console.log(produtos);
   };
 
   const setQuantidadeMenos = (prod) => {
@@ -40,20 +39,16 @@ function Products() {
       const index = newProducts.findIndex((item) => item.id === prod.id);
       newProducts[index].quantity -= 1;
       setProdutos(newProducts);
-      console.log(produtos);
     }
   };
 
   const inputQuantidade = (e) => {
     const { name, value } = e.target;
-    console.log(typeof name);
     const newProducts = [...produtos];
     const index = newProducts.findIndex((item) => item.id === Number(name));
-    console.log(index);
     newProducts[index].quantity = Number(value);
     setProdutos(newProducts);
     const newInput = { ...input, [name]: value };
-    console.log(name, value);
     setInput(newInput);
   };
 

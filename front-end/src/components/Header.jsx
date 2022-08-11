@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { removeItemLocalStorage } from '../service/helpers';
-import authToken from '../utils/authToken';
+// import authToken from '../utils/authToken';
 
 function Header() {
-  const [dataUser, setDataUser] = useState({});
+  const [dataUser, setDataUser] = useState();
 
   const getDataUser = () => {
     const getStorage = localStorage.getItem('user');
     const dataParse = JSON.parse(getStorage);
-    setDataUser(dataParse);
+    setDataUser(dataParse.name);
   };
 
   useEffect(() => {
-    console.log('routes', authToken());
     getDataUser();
   }, []);
 
@@ -34,7 +33,7 @@ function Header() {
       <span
         data-testid="customer_products__element-navbar-user-full-name"
       >
-        {dataUser.name}
+        { dataUser }
       </span>
       <Link
         to="/login"

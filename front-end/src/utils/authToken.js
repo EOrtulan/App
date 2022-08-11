@@ -12,7 +12,6 @@ const authToken = () => {
     return false;
   }
   const tokenDecoded = decode(token);
-  console.log(tokenDecoded);
   if (tokenDecoded.exp <= Math.floor(new Date() / THOUSAND)) {
     localStorage.removeItem('user');
     return false;

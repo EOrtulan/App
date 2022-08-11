@@ -16,7 +16,6 @@ function Private({ Item, Login }) {
     }
   };
   const { status, role } = authToken();
-  // console.log(authToken());
   if (!Login) return status ? <Item /> : <Navigate to="/login" replace />;
   if (Login) return status ? verificaRole(role) : <Item />;
 }
