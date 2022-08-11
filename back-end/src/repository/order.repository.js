@@ -16,8 +16,8 @@ const checkout = async (newSale) => {
 
   const { id } = result.dataValues;
   return id;
-}
+};
 
 module.exports = {
   checkout,
-}
+};

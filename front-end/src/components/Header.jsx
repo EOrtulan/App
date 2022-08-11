@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import React from 'react';
 import { Link } from 'react-router-dom';
 import { removeItemLocalStorage } from '../service/helpers';
 // import authToken from '../utils/authToken';

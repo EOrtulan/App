@@ -11,4 +11,4 @@ const createSale = async (req, res, next) => {
 
 module.exports = {
     createSale,
-}
+};
