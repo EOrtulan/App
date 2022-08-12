@@ -17,7 +17,7 @@ function LoginPage() {
     try {
       const response = await login(user.email, user.password);
       setItemLocalStorage('user', JSON.stringify(response));
-      redirectRole(response.token, navigate);
+      redirectRole(response.token, navigate, response.role);
     } catch (err) {
       setNotFoundEmail(true);
     }
