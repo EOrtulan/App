@@ -12,7 +12,8 @@ const authToken = () => {
     return false;
   }
   const tokenDecoded = decode(token);
-  if (tokenDecoded.exp <= Math.floor(new Date() / THOUSAND)) {
+  if (tokenDecoded.exp <= Math.floor(new Date() / THOUSAND
+  || tokenDecoded === undefined || tokenDecoded === null)) {
     localStorage.removeItem('user');
     return false;
   }
