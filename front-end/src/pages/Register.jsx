@@ -14,8 +14,10 @@ function Register() {
 
   const buttonRegister = async () => {
     try {
-      await register(user.name, user.email, user.password);
-      navigate('/customer/products');
+      const response = await register(user.name, user.email, user.password);
+      console.log(response);
+      setItemLocalStorage('user', JSON.stringify(response));
+      redirectRole(response.token, navigate);
     } catch (err) {
       setErrorRegister(true);
     }

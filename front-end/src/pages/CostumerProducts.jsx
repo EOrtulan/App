@@ -14,6 +14,11 @@ function Products() {
     const getProducts = async () => {
       const { data } = await api.get('/products');
       const newData = data.map((item) => ({ ...item, quantity: 0 }));
+      let obj = {};
+      data.forEach((item) => {
+        obj = { ...obj, [item.id]: '0' };
+      });
+      setInput(obj);
       setCard(newData);
       setProdutos(newData);
     };
@@ -25,7 +30,7 @@ function Products() {
     produtos.forEach((item) => {
       total += item.quantity * item.price;
     });
-    return total;
+    return String(total.toFixed(2)).replace('.', ',');
   };
 
   const setQuantidadeMais = (prod) => {
@@ -33,6 +38,7 @@ function Products() {
     const index = newProducts.findIndex((item) => item.id === prod.id);
     newProducts[index].quantity += 1;
     setProdutos(newProducts);
+    setInput({ ...input, [prod.id]: newProducts[index].quantity });
   };
 
   const setQuantidadeMenos = (prod) => {
@@ -41,6 +47,7 @@ function Products() {
       const index = newProducts.findIndex((item) => item.id === prod.id);
       newProducts[index].quantity -= 1;
       setProdutos(newProducts);
+      setInput({ ...input, [prod.id]: newProducts[index].quantity });
     }
   };
 
@@ -71,9 +78,15 @@ function Products() {
                 width="50px"
                 alt={ prod.name }
               />
-              <div data-testid={ `customer_products__element-card-price-${prod.id}` }>
+              <div>
                 R$
-                { Number(prod.price).toFixed(2) }
+                {' '}
+                <span
+                  data-testid={ `customer_products__element-card-price-${prod.id}` }
+                >
+                  { prod.price.replace('.', ',') }
+                </span>
+
               </div>
               <button
                 data-testid={ `customer_products__button-card-rm-item-${prod.id}` }
@@ -86,7 +99,8 @@ function Products() {
                 data-testid={ `customer_products__input-card-quantity-${prod.id}` }
                 type="number"
                 name={ prod.id }
-                value={ input[prod.id] ? input[prod.id] : '' }
+                value={ input[prod.id] }
+                onFocus={ () => setInput({ ...input, [prod.id]: '' }) }
                 onChange={ inputQuantidade }
               />
               <button
@@ -100,12 +114,14 @@ function Products() {
           ))
         )}
         <button
-          data-testid="customer_products__button-cart"
           type="button"
           onClick={ () => navigate('/customer/checkout') }
         >
           Ver Carrinho: R$
-          { valueCar() }
+          {' '}
+          <span data-testid="customer_products__checkout-bottom-value">
+            {valueCar()}
+          </span>
         </button>
       </div>
     </div>
