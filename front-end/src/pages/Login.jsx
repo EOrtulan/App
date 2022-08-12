@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../service/api';
 import { setItemLocalStorage } from '../service/helpers';
 import dataValidator from '../utils';
+import redirectRole from '../utils/redirectRole';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -16,17 +17,7 @@ function LoginPage() {
     try {
       const response = await login(user.email, user.password);
       setItemLocalStorage('user', JSON.stringify(response));
-      if (response.token) {
-        if (response.role === 'administrator') {
-          navigate('/admin/manage');
-        }
-        if (response.role === 'seller') {
-          navigate('/seller/orders');
-        }
-        if (response.role === 'customer') {
-          navigate('/customer/products');
-        }
-      }
+      redirectRole(response.token, navigate);
     } catch (err) {
       setNotFoundEmail(true);
     }
