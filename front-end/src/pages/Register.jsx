@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../service/api';
-import dataValidator from '../utils';
 
 function Register() {
   const navigate = useNavigate();
