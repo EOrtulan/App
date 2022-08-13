@@ -23,9 +23,9 @@ function Register() {
 
   const buttonRegister = async () => {
     try {
-      const data = await register(user.name, user.email, user.password);
+      const result = await register(user.name, user.email, user.password);
       setItemLocalStorage('user', JSON.stringify(data));
-      redirectRole(navigate, data.role);
+      redirectRole(navigate, result.data.role);
     } catch (err) {
       setErrorRegister(true);
     }
