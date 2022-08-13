@@ -10,18 +10,15 @@ function LoginPage() {
   });
   const [notFoundEmail, setNotFoundEmail] = useState(false);
 
-  function dataValidator(email, password, name) {
+  function dataValidator(email, password) {
     const SIX = 6;
-    const TWELVE = 12;
     const validateMailRegex = /\S+@\S+\.\S+/;
-    if (name && name.length < TWELVE) return true;
     if (!validateMailRegex.test(email) || password.length < SIX) return true;
   }
 
   async function onSubmitButton() {
     try {
-      const response = await login(user.email, user.password);
-      localStorage.setItem('user', JSON.stringify(response));
+      await login(user.email, user.password);
       navigate('/customer/products');
     } catch (err) {
       setNotFoundEmail(true);
