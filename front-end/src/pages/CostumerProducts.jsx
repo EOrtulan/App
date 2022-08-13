@@ -72,7 +72,7 @@ function Products() {
                 {prod.name}
               </div>
               <img
-                data-testid={ `customer_products__button-card-rm-item-${prod.id}` }
+                data-testid={ `customer_products__img-card-bg-image-${prod.id}` }
                 src={ prod.urlImage }
                 height="50px"
                 width="50px"
@@ -116,6 +116,8 @@ function Products() {
         <button
           type="button"
           onClick={ () => navigate('/customer/checkout') }
+          data-testid="customer_products__button-cart"
+          disabled={ valueCar() === '0,00' }
         >
           Ver Carrinho: R$
           {' '}

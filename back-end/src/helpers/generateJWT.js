@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
 const jwtConfig = {
-  expiresIn: '1h',
+  expiresIn: '15m',
   algorithm: 'HS256',
 };
 

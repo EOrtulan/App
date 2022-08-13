@@ -1,14 +1,12 @@
-const redirectRole = async (token, navigate) => {
-  if (token) {
-    if (response.role === 'administrator') {
-      navigate('/admin/manage');
-    }
-    if (response.role === 'seller') {
-      navigate('/seller/orders');
-    }
-    if (response.role === 'customer') {
-      navigate('/customer/products');
-    }
+const redirectRole = async (navigate, role) => {
+  if (role === 'administrator') {
+    navigate('/admin/manage');
+  }
+  if (role === 'seller') {
+    navigate('/seller/orders');
+  }
+  if (role === 'customer') {
+    navigate('/customer/products');
   }
 };
 export default redirectRole;
