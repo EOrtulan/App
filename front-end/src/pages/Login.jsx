@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../service/api';
-import { setItemLocalStorage } from '../service/helpers';
-import dataValidator from '../utils';
-import redirectRole from '../utils/redirectRole';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -13,11 +10,19 @@ function LoginPage() {
   });
   const [notFoundEmail, setNotFoundEmail] = useState(false);
 
+  function dataValidator(email, password, name) {
+    const SIX = 6;
+    const TWELVE = 12;
+    const validateMailRegex = /\S+@\S+\.\S+/;
+    if (name && name.length < TWELVE) return true;
+    if (!validateMailRegex.test(email) || password.length < SIX) return true;
+  }
+
   async function onSubmitButton() {
     try {
       const response = await login(user.email, user.password);
-      setItemLocalStorage('user', JSON.stringify(response));
-      redirectRole(navigate, response.role);
+      localStorage.setItem('user', JSON.stringify(response));
+      navigate('/customer/products');
     } catch (err) {
       setNotFoundEmail(true);
     }
