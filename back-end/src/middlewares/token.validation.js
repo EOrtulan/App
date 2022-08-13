@@ -13,7 +13,7 @@ const authToken = async (req, res, next) => {
   try {
     const tokenDecoded = jwt.decode(token, jwtSecretKey);
     const user = await getUserByEmail(tokenDecoded.payload.email);
-    if (!user) return res.status(401).json({ message: 'Invalid token'});
+    if (!user) return res.status(401).json({ message: 'Invalid token' });
 
     req.userId = user.id;
     next();
