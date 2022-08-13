@@ -14,6 +14,7 @@ const login = async (email, pass) => {
 
   return {
     token,
+    id: user.id,
     role: user.role,
     name: user.name,
     email: user.email,
@@ -28,7 +29,15 @@ const register = async (name, email, password) => {
   const passCrypt = md5(password);
   const result = await create(name, email, passCrypt);
 
-  return result;
+  const token = generateJWT({ name, email, role: 'customer' });
+
+  return {
+    token,
+    id: result.id,
+    role: 'customer',
+    name: result.name,
+    email: result.email,
+  };
 };
 
 module.exports = { 

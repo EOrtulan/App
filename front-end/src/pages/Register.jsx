@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../service/api';
 import dataValidator from '../utils';
+import redirectRole from '../utils/redirectRole';
+import { setItemLocalStorage } from '../service/helpers';
 
 function Register() {
   const navigate = useNavigate();
@@ -12,10 +14,18 @@ function Register() {
     password: '',
   });
 
+  useEffect(() => {
+    const userStorage = localStorage.getItem('user');
+    if (userStorage) {
+      localStorage.removeItem('user');
+    }
+  }, []);
+
   const buttonRegister = async () => {
     try {
-      await register(user.name, user.email, user.password);
-      navigate('/customer/products');
+      const result = await register(user.name, user.email, user.password);
+      setItemLocalStorage('user', JSON.stringify(data));
+      redirectRole(navigate, result.data.role);
     } catch (err) {
       setErrorRegister(true);
     }
