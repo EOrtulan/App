@@ -25,7 +25,7 @@ function Register() {
     try {
       const data = await register(user.name, user.email, user.password);
       setItemLocalStorage('user', JSON.stringify(data));
-      redirectRole(data.token, navigate, data.role);
+      redirectRole(navigate, data.role);
     } catch (err) {
       setErrorRegister(true);
     }
