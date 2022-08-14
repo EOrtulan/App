@@ -1,7 +1,7 @@
 const md5 = require('md5');
 const ErrorConstructor = require('../helpers/erroConstructor');
 const generateJWT = require('../helpers/generateJWT');
-const { getUserByEmail, create } = require('../repository/user.repository');
+const { getUserByEmail } = require('../repository/user.repository');
 
 const login = async (email, pass) => {
   const user = await getUserByEmail(email);
@@ -21,26 +21,6 @@ const login = async (email, pass) => {
   };
 };
 
-const register = async (name, email, password) => {
-  const user = await getUserByEmail(email);
-
-  if (user) throw ErrorConstructor(409, 'Email already exist');
-
-  const passCrypt = md5(password);
-  const result = await create(name, email, passCrypt);
-
-  const token = generateJWT({ name, email, role: 'customer' });
-
-  return {
-    token,
-    id: result.id,
-    role: 'customer',
-    name: result.name,
-    email: result.email,
-  };
-};
-
 module.exports = { 
   login,
-  register,
 };
