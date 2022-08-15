@@ -8,6 +8,7 @@ function Products() {
   const [produtos, setProdutos] = useState([]);
   const [card, setCard] = useState([]);
   const [input, setInput] = useState({});
+  const [cart, setCart] = useState([]);
 
   const listProducts = async () => {
     const data = await getProducts();
@@ -25,6 +26,22 @@ function Products() {
     listProducts();
   }, []);
 
+  const cartAdd = (product) => {
+    if (cart.every((e) => e.id !== product.id)) setCart(() => [...cart, product]);
+  };
+
+  const cartRm = (product) => {
+    const index = cart.findIndex((e) => e.id === product.id);
+    const listCart = [...cart];
+    listCart.splice(index, 1);
+    setCart(listCart);
+  };
+
+  const checkout = () => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    navigate('/customer/checkout');
+  };
+
   const valueCar = () => {
     let total = 0;
     produtos.forEach((item) => {
@@ -39,6 +56,7 @@ function Products() {
     newProducts[index].quantity += 1;
     setProdutos(newProducts);
     setInput({ ...input, [prod.id]: newProducts[index].quantity });
+    cartAdd(prod);
   };
 
   const setQuantidadeMenos = (prod) => {
@@ -48,7 +66,9 @@ function Products() {
       newProducts[index].quantity -= 1;
       setProdutos(newProducts);
       setInput({ ...input, [prod.id]: newProducts[index].quantity });
+      cartAdd(prod);
     }
+    if (prod.quantity === 0) cartRm(prod);
   };
 
   const inputQuantidade = (e) => {
@@ -115,7 +135,7 @@ function Products() {
         )}
         <button
           type="button"
-          onClick={ () => navigate('/customer/checkout') }
+          onClick={ () => checkout() }
           data-testid="customer_products__button-cart"
           disabled={ valueCar() === '0,00' }
         >

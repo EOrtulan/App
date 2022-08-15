@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { removeItemLocalStorage } from '../service/helpers';
 
 function Header() {
   const [dataUser, setDataUser] = useState();
@@ -36,7 +35,7 @@ function Header() {
       </span>
       <Link
         to="/login"
-        onClick={ () => removeItemLocalStorage('user') }
+        onClick={ () => localStorage.removeItem('user') }
         data-testid="customer_products__element-navbar-link-logout"
       >
         sair
