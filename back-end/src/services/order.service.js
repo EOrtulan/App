@@ -25,7 +25,16 @@ const getAllSales = async () => {
   return sales;
 };
 
+const getSaleById = async (id) => {
+  const sale = await orderRepository.getSaleById(id);
+
+  if (!sale) throw ErrorConstructor(404, 'Product not found!');
+
+  return sale;
+};
+
 module.exports = {
   createSale,
   getAllSales,
+  getSaleById,
 }; 
