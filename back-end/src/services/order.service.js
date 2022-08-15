@@ -17,6 +17,15 @@ const createSale = async (newSale) => {
   return saleCreated;
 };
 
+const getAllSales = async () => {
+  const sales = await orderRepository.getAllSales();
+
+  if (!sales) throw ErrorConstructor(404, 'Products not found!');
+
+  return sales;
+};
+
 module.exports = {
   createSale,
+  getAllSales,
 }; 
