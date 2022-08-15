@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../service/api';
 import dataValidator, { redirectRole } from '../utils';
-import { setItemLocalStorage } from '../service/helpers';
 
 function Register() {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ function Register() {
   const buttonRegister = async () => {
     try {
       const data = await register(user.name, user.email, user.password);
-      setItemLocalStorage('user', JSON.stringify(data));
+      localStorage.setItem('user', JSON.stringify(data));
       redirectRole(navigate, data.role);
     } catch (err) {
       setErrorRegister(true);

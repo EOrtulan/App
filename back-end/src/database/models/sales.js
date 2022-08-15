@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
 
   sales.associete = (models) => {
     sales.belongsTo(models.users, 
-      { foreignKey: 'userId', as: 'users', onDelete: 'CASCADE' },
-      { foreignKey: 'sellerId', as: 'sellers', onDelete: 'CASCADE' })
+      { foreignKey: 'userId', as: 'users' },
+      { foreignKey: 'sellerId', as: 'sellers' })
   }
   return sales;
 }  
