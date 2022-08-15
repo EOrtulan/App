@@ -1,10 +1,59 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
+import { getSellers, saleRegister } from '../service/api';
 
 function Checkout() {
-  const parseProdutos = localStorage.getItem('cart');
-  console.log(parseProdutos);
-  const produtos = JSON.parse(parseProdutos);
+  const [sellers, setSellers] = useState([]);
+  const [seller, setSeller] = useState([]);
+  const [endereco, setEndereco] = useState({});
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    const getSllersApi = async () => {
+      const data = await getSellers();
+      console.log(data);
+      setSellers(data);
+      const parseProdutos = localStorage.getItem('cart');
+      const produtos = JSON.parse(parseProdutos);
+      setCart(produtos);
+    };
+    getSllersApi();
+  }, []);
+
+  function removerLinha(id) {
+    const newCart = cart.filter((item) => item.id !== Number(id));
+    localStorage.removeItem('cart');
+    setCart(newCart);
+    localStorage.setItem('cart', JSON.stringify(newCart));
+  }
+
+  const totalPrice = () => {
+    let total = 0;
+    cart.forEach((item) => {
+      total += item.price * item.quantity;
+    });
+    return total;
+  };
+
+  async function sellRegister() {
+    try {
+      const user = getItemLocalStorage('user');
+      const { id } = JSON.parse(user);
+      const products = cart.map((item) => (
+        { userId: item.id, quantity: item.quantity }));
+      const register = {
+        userId: id,
+        sellerId: seller.id,
+        products,
+        totalPrice: totalPrice(),
+        deliveryAddress: endereco.name,
+        deliveryNumber: endereco.number,
+      };
+      await saleRegister(register);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div>
@@ -21,14 +70,14 @@ function Checkout() {
           <th>Remover Item</th>
         </thead>
         <tbody>
-          {produtos.map((produto, i) => (
+          {cart && cart.map((produto, i) => (
             <tr
               key={ produto.id }
             >
               <td
                 data-testid={ `customer_checkout__element-order-table-item-number-${i}` }
               >
-                {i + 1}
+                {produto.id}
               </td>
               <td
                 data-testid={ `customer_checkout__element-order-table-name-${i}` }
@@ -57,7 +106,7 @@ function Checkout() {
                   type="button"
                   data-testid={ `customer_checkout__element-order-table-remove-${i}` }
                   value={ produto.id }
-                  onClick={ () => removerLinha(target.value) }
+                  onClick={ (e) => removerLinha(e.target.value) }
                 >
                   Remover
                 </button>
@@ -66,7 +115,16 @@ function Checkout() {
           ))}
         </tbody>
       </table>
-      {/* <div>
+      <div>
+        Total: R$
+        <div
+          data-testid="customer_checkout__element-order-total-price"
+        >
+          {totalPrice()}
+        </div>
+        {' '}
+      </div>
+      <div>
         Detalhes e Endereço para Entrega
         <label htmlFor="vendedor">
           P.Vendedor(a) Responsável
@@ -74,16 +132,15 @@ function Checkout() {
             name="vendedor"
             id="vendedor"
             data-testid="customer_checkout__select-seller"
-            value={ seller }
+            value={ seller.name }
             onChange={ (e) => setSeller({ name: e.target.value, id: e.target.key }) }
           >
-            {
-              sellers.map((item) => (
-                <option key={ item.id }>
-                  { item.name }
-                </option>
-              ))
-            }
+            {/* { sellers
+             && sellers.map((item) => (
+               <option key={ item.id }>
+                 { item.name }
+               </option>
+             ))} */}
             <option value="teste">teste</option>
           </select>
         </label>
@@ -94,11 +151,15 @@ function Checkout() {
             data-testid="customer_checkout__input-address"
             type="text"
             placeholder="xablau 123"
+            value={ endereco.name }
+            onChange={ (e) => setEndereco({ ...endereco, name: e.target.value }) }
           />
         </label>
         <label htmlFor="numero">
           Número
           <input
+            value={ endereco.number }
+            onChange={ (e) => setEndereco({ ...endereco, number: e.target.value }) }
             id="numero"
             data-testid="customer_checkout__input-addressNumber"
             type="text"
@@ -111,7 +172,7 @@ function Checkout() {
         >
           FINALIZAR PEDIDO
         </button>
-      </div> */}
+      </div>
     </div>
   );
 }
