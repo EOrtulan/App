@@ -3,6 +3,7 @@ import Checkout from './pages/Checkout';
 import Products from './pages/CostumerProducts';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Orders from './pages/CustomerOrders';
 
 function AppRoutes() {
   return (
@@ -12,6 +13,7 @@ function AppRoutes() {
       <Route path="/register" element={ <Register /> } />
       <Route path="/customer/products" element={ <Products /> } />
       <Route path="/customer/checkout" element={ <Checkout /> } />
+      <Route path="/customer/orders" element={ <Orders /> } />
     </Routes>
   );
 }

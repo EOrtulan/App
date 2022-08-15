@@ -40,4 +40,12 @@ export const getProducts = async () => {
   return response.data;
 };
 
+export const getSales = async () => {
+  const response = await api({
+    method: 'GET',
+    url: '/orders',
+  });
+  return response.data;
+};
+
 export default login;
