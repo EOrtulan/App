@@ -1,17 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import { getSales } from '../service/api';
+import { getOrdersId } from '../service/api';
 
-function Details() {
+function OrderDetails({ params }) {
   const [sale, setSales] = useState([]);
+  const getProducts = localStorage.getItem('cart');
+  const products = JSON.parse(getProducts);
+
   useEffect(() => {
-    const request = async () => {
-      const response = await getSales();
+    const requestApi = async () => {
+      const response = await getOrdersId(params.id);
       const { sales } = response;
       setSales(sales);
     };
-    request();
+
+    requestApi();
   }, []);
+
+  const totalPrice = () => {
+    let total = 0;
+    products.forEach((item) => {
+      total += item.price * item.quantity;
+    });
+    return total;
+  };
 
   return (
     <div>
@@ -25,7 +38,7 @@ function Details() {
         >
           Pedido
           {' '}
-          {sale[0].id}
+          {/* {sale[0].id} */}
         </div>
         <div
           data-testid="customer_order_details__element-order-details-label-seller-name"
@@ -35,13 +48,15 @@ function Details() {
         <div
           data-testid="customer_order_details__element-order-details-label-order-date"
         >
-          {sale[0].saleDate}
+          {/* {sale[0].saleDate} */}
+          data
         </div>
         <div
           data-testid="
             customer_order_details__element-order-details-label-delivery-status"
         >
-          { sale[0].status}
+          {/* { sale[0].status} */}
+          status
         </div>
         <div
           data-testid="customer_order_details__button-delivery-check"
@@ -58,7 +73,7 @@ function Details() {
           <th>Sub-total</th>
         </thead>
         <tbody>
-          {/* {produtos.map((produto, i) => (
+          {products.map((produto, i) => (
             <tr
               key={ produto.id }
               data-testid={
@@ -76,32 +91,39 @@ function Details() {
                   `customer_order_details__element-order-table-quantity-${i}`
                 }
               >
-                {produto.quantidade}
+                {produto.quantity}
               </td>
               <td
                 data-testid={
                   `customer_order_details__element-order-table-sub-total-${i}`
                 }
               >
-                {produto.price}
+                { String(produto.price).replace('.', ',')}
               </td>
               <td
                 data-testid={ `customer_order_details__element-order-total-price-${i}` }
               >
-                {Number(produto.price) * produto.quantidade}
+                {String(
+                  (Number(produto.price) * produto.quantity).toFixed(2),
+                ).replace('.', ',') }
               </td>
             </tr>
-          ))} */}
+          ))}
         </tbody>
         <div
           data-testid="customer_order_details__element-order-total-price"
         >
           Total: R$
-          {String(sale[0].totalPrice).replace('.', ',')}
+          {/* {String(sale[0].totalPrice).replace('.', ',')} */}
+          {totalPrice()}
         </div>
       </table>
     </div>
   );
 }
 
-export default Details;
+OrderDetails.propTypes = {
+  params: PropTypes.string.isRequired,
+};
+
+export default OrderDetails;

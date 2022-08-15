@@ -40,10 +40,10 @@ export const getProducts = async () => {
   return response.data;
 };
 
-export const getSales = async () => {
+export const getOrdersId = async (id) => {
   const response = await api({
     method: 'GET',
-    url: '/orders',
+    url: `/orders/${id}`,
   });
   return response.data;
 };
