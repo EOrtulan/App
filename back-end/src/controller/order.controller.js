@@ -9,6 +9,26 @@ const createSale = async (req, res, next) => {
   }
 };
 
+const getAllSales = async (_req, res, next) => {
+  try {
+    const sales = await orderService.getAllSales();
+    return res.status(200).json({ sales });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getSaleById = async (req, res, next) => {
+  try {
+    const sales = await orderService.getSaleById(req.params.id);
+    return res.status(200).json({ sales });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
     createSale,
+    getAllSales,
+    getSaleById,
 }; 
