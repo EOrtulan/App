@@ -1,5 +1,5 @@
 const registerSchema = require('../validations/register.schema');
-const ErrorConstructor = require('../helpers/erroConstructor');
+const ErrorConstructor = require('../helpers/errorConstructor');
 
 const registerValidate = (req, _res, next) => {
   const { email, password, name } = req.body;
@@ -11,4 +11,4 @@ const registerValidate = (req, _res, next) => {
   next();
 };
 
-module.exports = registerValidate;
+module.exports = registerValidate; 

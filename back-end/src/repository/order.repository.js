@@ -4,7 +4,7 @@ const createSale = async (newSale) => {
   const { 
     userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, products, 
   } = newSale;
-  
+
   const saleDate = new Date();
   const status = 'pendente';
   const result = await sales.create({
@@ -24,4 +24,4 @@ const createSale = async (newSale) => {
 
 module.exports = {
   createSale,
-};
+}; 

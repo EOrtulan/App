@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-export const api = axios.create({
+const api = axios.create({
   baseURL: 'http://localhost:3001',
 });
 
-export const login = async (email, password) => {
+const login = async (email, password) => {
   const response = await api({
     method: 'POST',
     url: '/login',
@@ -28,3 +28,16 @@ export const register = async (name, email, password) => {
   });
   return response.data;
 };
+
+export const getProducts = async () => {
+  const response = await api({
+    method: 'GET',
+    url: '/products',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.data;
+};
+
+export default login;

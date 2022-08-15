@@ -1,7 +1,7 @@
 const loginSchema = require('../validations/login.schema');
-const ErrorConstructor = require('../helpers/erroConstructor');
+const ErrorConstructor = require('../helpers/errorConstructor');
 
-const loginValidate = (req, _res, next) => {
+const loginValidate = (req, res, next) => {
   const { email, password } = req.body;
 
   const { error } = loginSchema.validate({ email, password });
@@ -11,4 +11,4 @@ const loginValidate = (req, _res, next) => {
   next();
 };
 
-module.exports = loginValidate;
+module.exports = loginValidate; 

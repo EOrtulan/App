@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../service/api';
-import dataValidator from '../utils';
-import redirectRole from '../utils/redirectRole';
+import dataValidator, { redirectRole } from '../utils';
 import { setItemLocalStorage } from '../service/helpers';
 
 function Register() {

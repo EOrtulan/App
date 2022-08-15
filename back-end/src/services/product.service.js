@@ -1,4 +1,4 @@
-const ErrorConstructor = require('../helpers/erroConstructor');
+const ErrorConstructor = require('../helpers/errorConstructor');
 const productRepository = require('../repository/product.repository');
 
 const getAll = async () => {
@@ -11,4 +11,4 @@ const getAll = async () => {
 
 module.exports = {
   getAll,
-};
+}; 

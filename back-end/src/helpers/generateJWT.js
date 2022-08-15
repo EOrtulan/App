@@ -1,20 +1,17 @@
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
 
 const jwtConfig = {
-  expiresIn: '15m',
+  // expiresIn: '15m',
   algorithm: 'HS256',
 };
 
 const generateJWT = (payload) => {
-  const secretKey = fs.readFileSync('jwt.evaluation.key', 'utf-8');
-
   const token = jwt.sign(
     { data: payload }, 
-    secretKey || 'hulkEsmaga', 
+    process.env.JWT_SECRET || 'hulkEsmaga', 
     jwtConfig,
   );
   return token;
 };
 
-module.exports = generateJWT;
+module.exports = generateJWT; 

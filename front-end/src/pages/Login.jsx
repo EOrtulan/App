@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../service/api';
+import login from '../service/api';
 import { setItemLocalStorage } from '../service/helpers';
-import dataValidator from '../utils';
-import redirectRole from '../utils/redirectRole';
+import dataValidator, { redirectRole } from '../utils';
 
 function LoginPage() {
   const navigate = useNavigate();

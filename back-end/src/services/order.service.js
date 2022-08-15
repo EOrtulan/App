@@ -1,4 +1,4 @@
-const ErrorConstructor = require('../helpers/erroConstructor');
+const ErrorConstructor = require('../helpers/errorConstructor');
 const orderRepository = require('../repository/order.repository');
 const saleProductRepository = require('../repository/sale.product.repository');
 
@@ -19,4 +19,4 @@ const createSale = async (newSale) => {
 
 module.exports = {
   createSale,
-};
+}; 

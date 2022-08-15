@@ -1,4 +1,4 @@
-function dataValidator(email, password, name) {
+export default function dataValidator(email, password, name) {
   const SIX = 6;
   const TWELVE = 12;
   const validateMailRegex = /\S+@\S+\.\S+/;
@@ -6,4 +6,14 @@ function dataValidator(email, password, name) {
   if (!validateMailRegex.test(email) || password.length < SIX) return true;
 }
 
-export default dataValidator;
+export const redirectRole = async (navigate, role) => {
+  if (role === 'administrator') {
+    navigate('/admin/manage');
+  }
+  if (role === 'seller') {
+    navigate('/seller/orders');
+  }
+  if (role === 'customer') {
+    navigate('/customer/products');
+  }
+};

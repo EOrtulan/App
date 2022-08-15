@@ -1,28 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MyContext from '../store';
-import { api } from '../service/api';
+import { getProducts } from '../service/api';
 import Header from '../components/Header';
 
 function Products() {
   const navigate = useNavigate();
-  const { produtos, setProdutos } = useContext(MyContext);
+  const [produtos, setProdutos] = useState([]);
   const [card, setCard] = useState([]);
   const [input, setInput] = useState({});
 
+  const listProducts = async () => {
+    const data = await getProducts();
+    const newData = data.map((item) => ({ ...item, quantity: 0 }));
+    let obj = {};
+    data.forEach((item) => {
+      obj = { ...obj, [item.id]: '0' };
+    });
+    setInput(obj);
+    setCard(newData);
+    setProdutos(newData);
+  };
+
   useEffect(() => {
-    const getProducts = async () => {
-      const { data } = await api.get('/products');
-      const newData = data.map((item) => ({ ...item, quantity: 0 }));
-      let obj = {};
-      data.forEach((item) => {
-        obj = { ...obj, [item.id]: '0' };
-      });
-      setInput(obj);
-      setCard(newData);
-      setProdutos(newData);
-    };
-    getProducts();
+    listProducts();
   }, []);
 
   const valueCar = () => {
