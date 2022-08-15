@@ -21,7 +21,18 @@ const create = async (name, email, password) => {
   return user;
 };
 
+const getSeller = async () => {
+  const seller = await users.findOne({
+    where: {
+      role: 'seller',
+    },
+  });
+
+  return seller;
+};
+
 module.exports = {
   getUserByEmail,
   create,
+  getSeller,
 };
