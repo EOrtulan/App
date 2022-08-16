@@ -22,7 +22,7 @@ const create = async (name, email, password) => {
 };
 
 const getSeller = async () => {
-  const seller = await users.findOne({
+  const seller = await users.findAll({
     where: {
       role: 'seller',
     },

@@ -14,7 +14,7 @@ const createSale = async (newSale) => {
 
   const saleCreated = await saleProductRepository.create(productsOfSale);
 
-  return saleCreated;
+  return saleCreated && saleId;
 };
 
 const getAllSales = async () => {
