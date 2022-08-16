@@ -10,6 +10,7 @@ function OrderDetails({ params }) {
 
   useEffect(() => {
     const requestApi = async () => {
+      console.log(params.id);
       const response = await getOrdersId(params.id);
       const { sales } = response;
       setSales(sales);
