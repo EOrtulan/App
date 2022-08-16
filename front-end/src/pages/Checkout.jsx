@@ -57,6 +57,7 @@ function Checkout() {
         deliveryAddress: endereco.name,
         deliveryNumber: endereco.number,
       };
+      console.log(register);
       const registerOrder = await saleRegister(register);
       navigate(`/customer/orders/${registerOrder.id}`);
     } catch (err) {

@@ -41,9 +41,9 @@ const register = async (name, email, password) => {
 
 const getSeller = async () => {
   const sellers = await userRepository.getSeller();
-  
+
   return sellers;
-  }; 
+};
 
 module.exports = {
   loginService,

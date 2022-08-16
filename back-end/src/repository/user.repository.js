@@ -22,13 +22,13 @@ const create = async (name, email, password) => {
 };
 
 const getSeller = async () => {
-  const seller = await users.findAll({
+  const sellers = await users.findAll({
     where: {
       role: 'seller',
     },
   });
 
-  return seller;
+  return sellers;
 };
 
 module.exports = {
