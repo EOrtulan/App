@@ -12,7 +12,8 @@ function Checkout() {
     setSeller(data);
     const parseProdutos = localStorage.getItem('cart');
     const produtos = JSON.parse(parseProdutos);
-    setCart(produtos);
+    const filter = produtos.filter((prod) => prod.quantity > 0);
+    setCart(filter);
   };
 
   useEffect(() => {
