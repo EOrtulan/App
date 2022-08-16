@@ -4,6 +4,8 @@ const api = axios.create({
   baseURL: 'http://localhost:3001',
 });
 
+const contentType = 'application/json';
+
 const login = async (email, password) => {
   const response = await api({
     method: 'POST',
@@ -34,24 +36,27 @@ export const getProducts = async () => {
     method: 'GET',
     url: '/products',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': contentType,
     },
   });
   return response.data;
 };
 
-
 export const getOrdersId = async (id) => {
   const response = await api({
     method: 'GET',
     url: `/orders/${id}`,
+  });
+
+  return response;
+};
 
 export const getSellers = async () => {
   const response = await api({
     method: 'GET',
     url: '/seller',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': contentType,
     },
   });
   return response.data;
@@ -71,7 +76,7 @@ export const getOrders = async () => {
     method: 'GET',
     url: '/orders',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': contentType,
     },
   });
   return response.data;

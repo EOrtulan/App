@@ -3,7 +3,6 @@ import Header from '../components/Header';
 import { getSellers, saleRegister } from '../service/api';
 
 function Checkout() {
-  const [sellers, setSellers] = useState([]);
   const [seller, setSeller] = useState([]);
   const [endereco, setEndereco] = useState({});
   const [cart, setCart] = useState([]);

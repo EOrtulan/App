@@ -13,6 +13,7 @@ function OrderDetails({ params }) {
       const response = await getOrdersId(params.id);
       const { sales } = response;
       setSales(sales);
+      console.log(sale);
     };
 
     requestApi();
