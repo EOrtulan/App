@@ -40,6 +40,7 @@ function Products() {
   const setQuantidadeMais = (prod) => {
     const newProducts = [...produtos];
     const index = newProducts.findIndex((item) => item.id === prod.id);
+
     newProducts[index].quantity += 1;
     setProdutos(newProducts);
     setInput({ ...input, [prod.id]: newProducts[index].quantity });
@@ -48,6 +49,7 @@ function Products() {
   const setQuantidadeMenos = (prod) => {
     const newProducts = [...produtos];
     const index = newProducts.findIndex((item) => item.id === prod.id);
+
     newProducts[index].quantity -= 1;
     setProdutos(newProducts);
     setInput({ ...input, [prod.id]: newProducts[index].quantity });
