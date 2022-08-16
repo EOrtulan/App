@@ -11,8 +11,8 @@ function OrderDetails() {
 
   useEffect(() => {
     const requestApi = async () => {
-      const response = await getOrdersId(props);
-      const { sales } = response;
+      const { sales } = await getOrdersId(params.id);
+      console.log(sales);
       setSales(sales);
     };
     requestApi();

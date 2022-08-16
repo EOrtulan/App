@@ -6,9 +6,7 @@ import Header from '../components/Header';
 function Products() {
   const navigate = useNavigate();
   const [produtos, setProdutos] = useState([]);
-  const [card, setCard] = useState([]);
   const [input, setInput] = useState({});
-  const [cart, setCart] = useState([]);
 
   const listProducts = async () => {
     const data = await getProducts();
@@ -18,7 +16,6 @@ function Products() {
       obj = { ...obj, [item.id]: '0' };
     });
     setInput(obj);
-    setCard(newData);
     setProdutos(newData);
   };
 
@@ -26,19 +23,9 @@ function Products() {
     listProducts();
   }, []);
 
-  const cartAdd = (product) => {
-    if (cart.every((e) => e.id !== product.id)) setCart(() => [...cart, product]);
-  };
-
-  const cartRm = (product) => {
-    const index = cart.findIndex((e) => e.id === product.id);
-    const listCart = [...cart];
-    listCart.splice(index, 1);
-    setCart(listCart);
-  };
-
   const checkout = () => {
-    localStorage.setItem('cart', JSON.stringify(cart));
+    console.log('checkout cart', produtos);
+    localStorage.setItem('cart', JSON.stringify(produtos));
     navigate('/customer/checkout');
   };
 
@@ -53,22 +40,19 @@ function Products() {
   const setQuantidadeMais = (prod) => {
     const newProducts = [...produtos];
     const index = newProducts.findIndex((item) => item.id === prod.id);
+
     newProducts[index].quantity += 1;
     setProdutos(newProducts);
     setInput({ ...input, [prod.id]: newProducts[index].quantity });
-    cartAdd(prod);
   };
 
   const setQuantidadeMenos = (prod) => {
-    if (prod.quantity > 0) {
-      const newProducts = [...produtos];
-      const index = newProducts.findIndex((item) => item.id === prod.id);
-      newProducts[index].quantity -= 1;
-      setProdutos(newProducts);
-      setInput({ ...input, [prod.id]: newProducts[index].quantity });
-      cartAdd(prod);
-    }
-    if (prod.quantity === 0) cartRm(prod);
+    const newProducts = [...produtos];
+    const index = newProducts.findIndex((item) => item.id === prod.id);
+
+    newProducts[index].quantity -= 1;
+    setProdutos(newProducts);
+    setInput({ ...input, [prod.id]: newProducts[index].quantity });
   };
 
   const inputQuantidade = (e) => {
@@ -85,8 +69,8 @@ function Products() {
     <div>
       <Header />
       <div>
-        { card && (
-          card.map((prod, i) => (
+        { produtos && (
+          produtos.map((prod, i) => (
             <div key={ i }>
               <div data-testid={ `customer_products__element-card-title-${prod.id}` }>
                 {prod.name}
@@ -111,7 +95,9 @@ function Products() {
               <button
                 data-testid={ `customer_products__button-card-rm-item-${prod.id}` }
                 type="button"
-                onClick={ () => setQuantidadeMenos(prod) }
+                onClick={ () => {
+                  if (prod.quantity > 0) setQuantidadeMenos(prod);
+                } }
               >
                 -
               </button>

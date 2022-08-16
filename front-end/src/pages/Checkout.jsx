@@ -15,7 +15,8 @@ function Checkout() {
     setSellers(data);
     const parseProdutos = localStorage.getItem('cart');
     const produtos = JSON.parse(parseProdutos);
-    setCart(produtos);
+    const filter = produtos.filter((prod) => prod.quantity > 0);
+    setCart(filter);
   };
 
   useEffect(() => {
@@ -57,7 +58,6 @@ function Checkout() {
         deliveryNumber: endereco.number,
       };
       console.log(register);
-      await saleRegister(register);
       const registerOrder = await saleRegister(register);
       navigate(`/customer/orders/${registerOrder.id}`);
     } catch (err) {
@@ -143,7 +143,6 @@ function Checkout() {
           <select
             id="vendedor"
             data-testid="customer_checkout__select-seller"
-            value={ seller.name }
             onChange={ changeSelect }
           >
             { sellers
@@ -152,7 +151,6 @@ function Checkout() {
                  { item.name }
                </option>
              ))}
-            <option>{ seller.name }</option>
           </select>
         </label>
         <label htmlFor="endereço">
