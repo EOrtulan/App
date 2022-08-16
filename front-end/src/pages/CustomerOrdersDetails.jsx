@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from 'react';
-// import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import { getOrdersId } from '../service/api';
 
 function OrderDetails() {
+  const params = useParams();
   const [sale, setSales] = useState([]);
   const getProducts = localStorage.getItem('cart');
   const products = JSON.parse(getProducts);
 
   useEffect(() => {
     const requestApi = async () => {
-      const response = await getOrdersId(props);
-      const { sales } = response;
+      const { sales } = await getOrdersId(params.id);
+      console.log(sales);
       setSales(sales);
-      console.log(sale);
     };
-
-    console.log(props);
-
     requestApi();
   }, []);
 
@@ -41,7 +38,7 @@ function OrderDetails() {
         >
           Pedido
           {' '}
-          {/* {sale[0].id} */}
+          {sale.id}
         </div>
         <div
           data-testid="customer_order_details__element-order-details-label-seller-name"
@@ -51,14 +48,14 @@ function OrderDetails() {
         <div
           data-testid="customer_order_details__element-order-details-label-order-date"
         >
-          {/* {sale[0].saleDate} */}
+          {sale.saleDate}
           data
         </div>
         <div
           data-testid="
             customer_order_details__element-order-details-label-delivery-status"
         >
-          {/* { sale[0].status} */}
+          { sale.status}
           status
         </div>
         <div
@@ -126,7 +123,7 @@ function OrderDetails() {
 }
 
 // OrderDetails.propTypes = {
-//   props: PropTypes.string.isRequired,
+//   params: PropTypes.Object.isRequired,
 // };
 
 export default OrderDetails;

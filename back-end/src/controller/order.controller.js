@@ -2,8 +2,8 @@ const orderService = require('../services/order.service');
 
 const createSale = async (req, res, next) => {
   try {
-    const sales = await orderService.createSale(req.body);
-    return res.status(201).json({ sales });
+    const id = await orderService.createSale(req.body);
+    return res.status(201).json({ id });
   } catch (error) {
     next(error);
   }
