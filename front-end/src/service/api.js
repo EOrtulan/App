@@ -48,7 +48,7 @@ export const getOrdersId = async (id) => {
     url: `/orders/${id}`,
   });
 
-  return response;
+  return response.data;
 };
 
 export const getSellers = async () => {
@@ -65,10 +65,10 @@ export const getSellers = async () => {
 export const saleRegister = async (sale) => {
   const response = await api({
     method: 'POST',
-    url: '/customer/checkout',
+    url: '/orders',
     data: sale,
   });
-  return response;
+  return response.data;
 };
 
 export const getOrders = async () => {

@@ -9,7 +9,6 @@ function CustomerOrders() {
   useEffect(() => {
     const getOrdersApi = async () => {
       const { sales } = await getOrders();
-      console.log(sales);
       setOrders(sales);
     };
     getOrdersApi();
@@ -21,7 +20,7 @@ function CustomerOrders() {
       <div>
         {orders
         && orders.map((order, i) => (
-          <Link key={ i } to={ `/orders/${order.id}` }>
+          <Link key={ i } to={ `/customer/orders/${order.id}` }>
             <div
               data-testid={ `customer_products__element-order-date-${order.id}` }
             >
