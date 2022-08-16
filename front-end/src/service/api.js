@@ -54,7 +54,7 @@ export const getSellers = async () => {
 export const saleRegister = async (sale) => {
   const response = await api({
     method: 'POST',
-    url: '/customer/checkout',
+    url: '/orders',
     data: sale,
   });
   return response;

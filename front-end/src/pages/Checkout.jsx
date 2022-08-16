@@ -37,18 +37,20 @@ function Checkout() {
 
   async function sellRegister() {
     try {
-      const user = getItemLocalStorage('user');
+      const user = localStorage.getItem('user');
       const { id } = JSON.parse(user);
       const products = cart.map((item) => (
-        { userId: item.id, quantity: item.quantity }));
+        { productId: item.id, quantity: item.quantity }));
+      console.log(seller.id);
       const register = {
         userId: id,
-        sellerId: seller.id,
-        products,
+        sellerId: 1, // Não consegui consertar o sellerId
         totalPrice: totalPrice(),
-        deliveryAddress: endereco.name,
+        deliveryAddress: 'Rua C',
         deliveryNumber: endereco.number,
+        products,
       };
+      console.log(register);
       await saleRegister(register);
     } catch (err) {
       console.log(err);
@@ -133,14 +135,19 @@ function Checkout() {
             id="vendedor"
             data-testid="customer_checkout__select-seller"
             value={ seller.name }
-            onChange={ (e) => setSeller({ name: e.target.value, id: e.target.key }) }
+            onChange={ (e) => {
+              console.log(e);
+              setSeller({ name: e.target.value, id: e.target.id });
+            } }
           >
-            {/* { sellers
+            { sellers
              && sellers.map((item) => (
-               <option key={ item.id }>
+               <option
+                 key="hulkEsmaga"
+               >
                  { item.name }
                </option>
-             ))} */}
+             ))}
             <option value="teste">teste</option>
           </select>
         </label>

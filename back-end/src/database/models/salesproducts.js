@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    productsId: {
+    productId: {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   {
     timestamps: false,
     underscored: true,
+    tableName: 'salesProducts'
   });
 
   salesProducts.associate = (models) => {
