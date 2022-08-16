@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { getSellers, saleRegister } from '../service/api';
 
 function Checkout() {
+  const navigate = useNavigate();
+  const [seller, setSeller] = useState({});
   const [sellers, setSellers] = useState([]);
-  const [seller, setSeller] = useState([]);
   const [endereco, setEndereco] = useState({});
   const [cart, setCart] = useState([]);
 
   const getSellersApi = async () => {
     const data = await getSellers();
-    setSeller(data);
+    setSellers(data);
     const parseProdutos = localStorage.getItem('cart');
     const produtos = JSON.parse(parseProdutos);
     setCart(produtos);
@@ -35,23 +37,29 @@ function Checkout() {
     return String(total.toFixed(2)).replace('.', ',');
   };
 
+  const changeSelect = ({ target }) => {
+    const newSeller = sellers.find((item) => item.name === target.value);
+    setSeller(newSeller);
+  };
+
   async function sellRegister() {
     try {
       const user = localStorage.getItem('user');
       const { id } = JSON.parse(user);
       const products = cart.map((item) => (
         { productId: item.id, quantity: item.quantity }));
-      console.log(seller.id);
       const register = {
         userId: id,
-        sellerId: 1, // Não consegui consertar o sellerId
-        totalPrice: totalPrice(),
-        deliveryAddress: 'Rua C',
-        deliveryNumber: endereco.number,
+        sellerId: seller.id,
         products,
+        totalPrice: totalPrice().replace(',', '.'),
+        deliveryAddress: endereco.name,
+        deliveryNumber: endereco.number,
       };
       console.log(register);
       await saleRegister(register);
+      const registerOrder = await saleRegister(register);
+      navigate(`/customer/orders/${registerOrder.id}`);
     } catch (err) {
       console.log(err);
     }
@@ -133,15 +141,14 @@ function Checkout() {
         <label htmlFor="vendedor">
           P.Vendedor(a) Responsável
           <select
-            name="vendedor"
             id="vendedor"
             data-testid="customer_checkout__select-seller"
             value={ seller.name }
-            onChange={ (e) => setSeller({ name: e.target.value, id: e.target.key }) }
+            onChange={ changeSelect }
           >
             { sellers
              && sellers.map((item) => (
-               <option key={ item.id }>
+               <option name={ item.id } key={ item.id }>
                  { item.name }
                </option>
              ))}

@@ -48,7 +48,7 @@ export const getOrdersId = async (id) => {
     url: `/orders/${id}`,
   });
 
-  return response;
+  return response.data;
 };
 
 export const getSellers = async () => {
@@ -68,7 +68,7 @@ export const saleRegister = async (sale) => {
     url: '/orders',
     data: sale,
   });
-  return response;
+  return response.data;
 };
 
 export const getOrders = async () => {
