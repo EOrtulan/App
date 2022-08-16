@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import OrderDetails from './pages/CustomerOrdersDetails';
 import CustomerOrders from './pages/CustomerOrders';
+import SellerOrders from './pages/SellerOrders';
+import SellerOrderDetails from './pages/SellerOrderDetails';
 
 function AppRoutes() {
   return (
@@ -16,6 +18,8 @@ function AppRoutes() {
       <Route path="/customer/checkout" element={ <Checkout /> } />
       <Route path="/customer/orders" element={ <CustomerOrders /> } />
       <Route path="/customer/orders/:id" element={ <OrderDetails /> } />
+      <Route path="/seller/orders" element={ <SellerOrders /> } />
+      <Route path="/seller/orders/:id" element={ <SellerOrderDetails /> } />
     </Routes>
   );
 }

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import { getOrdersId } from '../service/api';
 
-function OrderDetails() {
+function SellerOrderDetails() {
   const params = useParams();
   const [sale, setSales] = useState([]);
   const getProducts = localStorage.getItem('cart');
@@ -12,9 +12,9 @@ function OrderDetails() {
   useEffect(() => {
     const requestApi = async () => {
       const { sales } = await getOrdersId(params.id);
-      console.log(sales);
       setSales(sales);
     };
+
     requestApi();
   }, []);
 
@@ -34,33 +34,34 @@ function OrderDetails() {
       Detalhe do Pedido
       <div>
         <div
-          data-testid="customer_order_details__element-order-details-label-order-id"
+          data-testid="seller_order_details__element-order-details-label-order-id"
         >
           Pedido
           {' '}
           {sale.id}
         </div>
         <div
-          data-testid="customer_order_details__element-order-details-label-seller-name"
-        >
-          P.Vend:
-        </div>
-        <div
-          data-testid="customer_order_details__element-order-details-label-order-date"
+          data-testid="seller_order_details__element-order-details-label-order-date"
         >
           {sale.saleDate}
         </div>
         <div
           data-testid="
-            customer_order_details__element-order-details-label-delivery-status"
+          seller_order_details__element-order-details-label-delivery-status"
         >
           { sale.status}
         </div>
         <button
           type="button"
-          data-testid="customer_order_details__button-delivery-check"
+          data-testid="seller_order_details__button-preparing-check"
         >
-          MARCAR COMO ENTREGUE
+          PREPARAR PEDIDO
+        </button>
+        <button
+          type="button"
+          data-testid="seller_order_details__button-dispatch-check"
+        >
+          SAIU PARA ENTREGA
         </button>
       </div>
       <table>
@@ -78,33 +79,33 @@ function OrderDetails() {
             >
               <td
                 data-testid={
-                  `customer_order_details__element-order-table-item-number-${i}`
+                  `seller_order_details__element-order-table-item-number-${i}`
                 }
               >
                 {i + 1}
 
               </td>
               <td
-                data-testid={ `customer_order_details__element-order-table-name-${i}` }
+                data-testid={ `seller_order_details__element-order-table-name-${i}` }
               >
                 {produto.name}
               </td>
               <td
                 data-testid={
-                  `customer_order_details__element-order-table-quantity-${i}`
+                  `seller_order_details__element-order-table-quantity-${i}`
                 }
               >
                 {produto.quantity}
               </td>
               <td
                 data-testid={
-                  `customer_order_details__element-order-table-sub-total-${i}`
+                  `seller_order_details__element-order-table-unit-price-${i}`
                 }
               >
                 { String(produto.price).replace('.', ',')}
               </td>
               <td
-                data-testid={ `customer_order_details__element-order-total-price-${i}` }
+                data-testid={ `seller_order_details__element-order-table-sub-total-${i}` }
               >
                 {String(
                   (Number(produto.price) * produto.quantity).toFixed(2),
@@ -114,7 +115,7 @@ function OrderDetails() {
           ))}
         </tbody>
         <div
-          data-testid="customer_order_details__element-order-total-price"
+          data-testid="seller_order_details__element-order-total-price"
         >
           Total: R$
           {String(totalPrice().toFixed(2)).replace('.', ',')}
@@ -124,4 +125,4 @@ function OrderDetails() {
   );
 }
 
-export default OrderDetails;
+export default SellerOrderDetails;
