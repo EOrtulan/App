@@ -7,16 +7,16 @@ function Checkout() {
   const [endereco, setEndereco] = useState({});
   const [cart, setCart] = useState([]);
 
+  const getSellersApi = async () => {
+    const data = await getSellers();
+    setSeller(data);
+    const parseProdutos = localStorage.getItem('cart');
+    const produtos = JSON.parse(parseProdutos);
+    setCart(produtos);
+  };
+
   useEffect(() => {
-    const getSllersApi = async () => {
-      const data = await getSellers();
-      console.log(data);
-      setSellers(data);
-      const parseProdutos = localStorage.getItem('cart');
-      const produtos = JSON.parse(parseProdutos);
-      setCart(produtos);
-    };
-    getSllersApi();
+    getSellersApi();
   }, []);
 
   function removerLinha(id) {
@@ -31,7 +31,7 @@ function Checkout() {
     cart.forEach((item) => {
       total += item.price * item.quantity;
     });
-    return total;
+    return String(total.toFixed(2)).replace('.', ',');
   };
 
   async function sellRegister() {
@@ -61,22 +61,24 @@ function Checkout() {
       </div>
       <table>
         <thead>
-          <th>Item</th>
-          <th>Descrição</th>
-          <th>Quantidade</th>
-          <th>Valor unitario</th>
-          <th>Sub-total</th>
-          <th>Remover Item</th>
+          <tr>
+            <th>Item</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Valor unitario</th>
+            <th>Sub-total</th>
+            <th>Remover Item</th>
+          </tr>
         </thead>
         <tbody>
           {cart && cart.map((produto, i) => (
             <tr
-              key={ produto.id }
+              key={ i + 1 }
             >
               <td
                 data-testid={ `customer_checkout__element-order-table-item-number-${i}` }
               >
-                {produto.id}
+                { i + 1}
               </td>
               <td
                 data-testid={ `customer_checkout__element-order-table-name-${i}` }
@@ -131,7 +133,6 @@ function Checkout() {
             name="vendedor"
             id="vendedor"
             data-testid="customer_checkout__select-seller"
-            value={ seller.name }
             onChange={ (e) => setSeller({ name: e.target.value, id: e.target.key }) }
           >
             {/* { sellers
@@ -140,7 +141,7 @@ function Checkout() {
                  { item.name }
                </option>
              ))} */}
-            <option value="teste">teste</option>
+            <option>{ seller.name }</option>
           </select>
         </label>
         <label htmlFor="endereço">
