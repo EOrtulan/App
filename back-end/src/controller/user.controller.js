@@ -25,9 +25,9 @@ const getSeller = async (_req, res, next) => {
     const result = await userService.getSeller();
     return res.status(200).json(result);
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
 module.exports = {
   loginController,
