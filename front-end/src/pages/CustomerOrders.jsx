@@ -14,6 +14,12 @@ function CustomerOrders() {
     getOrdersApi();
   }, []);
 
+  const formatedDate = (date) => {
+    const dateSplit = date.split('T', 1).join();
+    const newDate = dateSplit.split('-').reverse().join('/');
+    return newDate;
+  };
+
   return (
     <div>
       <Header />
@@ -24,32 +30,30 @@ function CustomerOrders() {
             <div
               data-testid={ `customer_products__element-order-date-${order.id}` }
             >
-              <div
+              <p
                 data-testid={ `customer_orders__element-order-id-${order.id}` }
               >
-                <div>Pedido</div>
-                <div>{order.id}</div>
-              </div>
-              <div
-                data-testid={ `customer_orders__element-card-price-${order.id}` }
+                {`Pedido: ${order.id}`}
+              </p>
+              <p
+                data-testid={ `customer_orders__element-delivery-status-${order.id}` }
               >
                 {order.status}
-              </div>
-              <div>
-                <div
-                  data-testid={ `customer_orders__element-order-date-${order.id}` }
-                >
-                  {order.saleDate}
-                </div>
-                <div>
-                  R$
-                  <div
-                    data-testid={ `customer_orders__element-card-price-${order.id}` }
-                  >
-                    {(order.totalPrice).replace('.', ',')}
-                  </div>
-                </div>
-              </div>
+              </p>
+              <p
+                data-testid={ `customer_orders__element-order-date-${order.id}` }
+              >
+                {formatedDate(order.saleDate)}
+              </p>
+              <span>
+                R$:
+                {' '}
+              </span>
+              <span
+                data-testid={ `customer_orders__element-card-price-${order.id}` }
+              >
+                {(order.totalPrice).replace('.', ',')}
+              </span>
             </div>
           </Link>
         ))}

@@ -4,10 +4,11 @@ const {
   getAllSales,
   getSaleById,
  } = require('../../controller/order.controller');
+const authToken = require('../../middlewares/token.validate');
 
 const orderRouter = Router();
 
-orderRouter.post('/', createSale);
+orderRouter.post('/', authToken, createSale);
 orderRouter.get('/', getAllSales);
 orderRouter.get('/:id', getSaleById);
 

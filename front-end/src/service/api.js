@@ -62,10 +62,13 @@ export const getSellers = async () => {
   return response.data;
 };
 
-export const saleRegister = async (sale) => {
+export const saleRegister = async (sale, token) => {
   const response = await api({
     method: 'POST',
     url: '/orders',
+    headers: {
+      Authorization: token,
+    },
     data: sale,
   });
   return response.data;
@@ -80,6 +83,15 @@ export const getOrders = async () => {
     },
   });
   return response.data;
+};
+
+export const updateState = async (id, status) => {
+  const result = await api({
+    method: 'PATCH',
+    url: '/orders/id',
+    data: status,
+  });
+  return result;
 };
 
 export default login;

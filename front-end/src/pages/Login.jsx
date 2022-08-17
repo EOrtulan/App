@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import login from '../service/api';
 import dataValidator, { redirectRole } from '../utils';
@@ -20,6 +20,17 @@ function LoginPage() {
       setNotFoundEmail(true);
     }
   }
+
+  const verifyLogged = () => {
+    const localUser = JSON.parse(localStorage.getItem('user'));
+    if (localUser) {
+      redirectRole(navigate, localUser.role);
+    }
+  };
+
+  useEffect(() => {
+    verifyLogged();
+  }, []);
 
   return (
     <div>

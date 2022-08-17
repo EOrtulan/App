@@ -16,18 +16,6 @@ module.exports = {
       role: 'seller'
     },
     {
-      name: 'Cricrano Pereira',
-      email: 'cicrano@deliveryapp.com',
-      password: '3c28d2b0881bf46457a853e0b07531c6',
-      role: 'seller'
-    },
-    {
-      name: 'Beltrano Pereira',
-      email: 'beltrano@deliveryapp.com',
-      password: '3c28d2b0881bf46457a853e0b07531c6',
-      role: 'seller'
-    },
-    {
       name: 'Cliente Zé Birita',
       email: 'zebirita@email.com',
       password: '1c37466c159755ce1fa181bd247cb925',
