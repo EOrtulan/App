@@ -85,4 +85,13 @@ export const getOrders = async () => {
   return response.data;
 };
 
+export const updateState = async (id, status) => {
+  const result = await api({
+    method: 'PATCH',
+    url: '/orders/id',
+    data: status,
+  });
+  return result;
+};
+
 export default login;
