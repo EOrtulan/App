@@ -6,8 +6,8 @@ import { getOrdersId, updateState } from '../service/api';
 function SellerOrderDetails() {
   const params = useParams();
   const [sale, setSales] = useState([]);
-  const [preparar, setPreparar] = useState(true);
-  const [saiu, setSaiu] = useState(false);
+  const [preparar, setPreparar] = useState(false);
+  const [saiu, setSaiu] = useState(true);
 
   useEffect(() => {
     const requestApi = async () => {
@@ -32,10 +32,12 @@ function SellerOrderDetails() {
     const data = await getOrdersId(params.id);
     setSales(data);
 
-    if (status === 'Preparando' || status === 'Em Trânsito' || status === 'Entregue') {
-      setPreparar(false);
-    } else {
-      setSaiu(t);
+    if (status === 'Preparando') {
+      setPreparar(true);
+      setSaiu(false);
+    }
+    if (status === 'Em Trânsito') {
+      setSaiu(true);
     }
   };
 
@@ -66,10 +68,10 @@ function SellerOrderDetails() {
         </div>
         <button
           type="button"
-          name={ sale.status }
+          name="Preparando"
           data-testid="seller_order_details__button-preparing-check"
           onClick={ (e) => changeStatus(e.target.name) }
-          disabled={ saiu }
+          disabled={ preparar }
 
         >
           PREPARAR PEDIDO
@@ -79,7 +81,7 @@ function SellerOrderDetails() {
           name="Em Trânsito"
           data-testid="seller_order_details__button-dispatch-check"
           onClick={ (e) => changeStatus(e.target.name) }
-          disabled={ preparar }
+          disabled={ saiu }
         >
           SAIU PARA ENTREGA
         </button>

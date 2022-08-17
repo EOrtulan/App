@@ -87,11 +87,19 @@ export const getOrders = async () => {
 
 export const updateState = async (id, status) => {
   const result = await api({
-    method: 'PATCH',
-    url: `/orders/${id}`,
-    data: status,
+    method: 'PUT',
+    url: `/orders/${id}?status=${status}`,
   });
   return result;
+};
+
+export const getOrdersSeller = async (id) => {
+  const response = await api({
+    method: 'GET',
+    url: `seller/${id}/orders`,
+  });
+
+  return response.data;
 };
 
 export default login;
