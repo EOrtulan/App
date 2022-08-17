@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
+import SellerHeader from '../components/SellerHeader';
 import { getOrders } from '../service/api';
 
 function SellerOrders() {
@@ -16,7 +16,7 @@ function SellerOrders() {
 
   return (
     <div>
-      <Header />
+      <SellerHeader />
       <div>
         {orders
         && orders.map((order, i) => (

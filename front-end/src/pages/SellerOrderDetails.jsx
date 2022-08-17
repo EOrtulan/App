@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../components/Header';
+import SellerHeader from '../components/SellerHeader';
 import { getOrdersId } from '../service/api';
 
 function SellerOrderDetails() {
   const params = useParams();
   const [sale, setSales] = useState([]);
+  // const [prepar, setPreparar] = useState(false);
+  // const [saiu, setSaiu] = useState(true);
   const getProducts = localStorage.getItem('cart');
   const products = JSON.parse(getProducts);
 
@@ -26,12 +28,20 @@ function SellerOrderDetails() {
     return total;
   };
 
+  // const changeStatus = async (status) => {
+  //   await setStatus(params.id, status);
+  //   if (status === 'preparando') {
+  //     setPreparar(true)
+  //   }
+  // };
+
   return (
     <div>
       <div>
-        <Header />
+        <SellerHeader />
       </div>
       Detalhe do Pedido
+      {console.log(sale)}
       <div>
         <div
           data-testid="seller_order_details__element-order-details-label-order-id"
@@ -53,13 +63,20 @@ function SellerOrderDetails() {
         </div>
         <button
           type="button"
+          name="Preparando"
           data-testid="seller_order_details__button-preparing-check"
+          onClick={ (e) => changeStatus(e.target.name) }
+          disabled={ sale.status !== 'Pendete' }
+
         >
           PREPARAR PEDIDO
         </button>
         <button
           type="button"
+          name="Em Trânsito"
           data-testid="seller_order_details__button-dispatch-check"
+          onClick={ (e) => changeStatus(e.target.name) }
+          disabled={ sale.status !== 'Preparando' }
         >
           SAIU PARA ENTREGA
         </button>
