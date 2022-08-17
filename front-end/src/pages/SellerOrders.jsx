@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SellerHeader from '../components/SellerHeader';
-import { getOrders } from '../service/api';
+import { getOrdersSeller } from '../service/api';
 
 function SellerOrders() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     const getOrdersApi = async () => {
-      const { sales } = await getOrders();
-      setOrders(sales);
+      const user = localStorage.getItem('user');
+      const { id } = JSON.parse(user);
+      const data = await getOrdersSeller(id);
+      console.log(data);
+      setOrders(data);
     };
     getOrdersApi();
   }, []);
+
+  const formatedDate = (date) => {
+    const dateSplit = date.split('T', 1).join();
+    const newDate = dateSplit.split('-').reverse().join('/');
+    return newDate;
+  };
 
   return (
     <div>
@@ -38,7 +47,7 @@ function SellerOrders() {
                 <div
                   data-testid={ `seller_orders__element-order-date-${order.id}` }
                 >
-                  {order.saleDate}
+                  {formatedDate(order.saleDate)}
                 </div>
                 <div data-testid={ `seller_orders__element-card-price-${order.id}` }>
                   R$
