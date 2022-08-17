@@ -16,7 +16,7 @@ function CustomerOrders() {
 
   const formatedDate = (date) => {
     const dateSplit = date.split('T', 1).join();
-    const newDate = dateSplit.split('-').reverse().join('-');
+    const newDate = dateSplit.split('-').reverse().join('/');
     return newDate;
   };
 
@@ -36,14 +36,14 @@ function CustomerOrders() {
                 {`Pedido: ${order.id}`}
               </p>
               <p
-                data-testid={ `customer_orders__element-card-price-${order.id}` }
+                data-testid={ `customer_orders__element-delivery-status-${order.id}` }
               >
                 {order.status}
               </p>
               <p
                 data-testid={ `customer_orders__element-order-date-${order.id}` }
               >
-                {`Data: ${formatedDate(order.saleDate)}`}
+                {formatedDate(order.saleDate)}
               </p>
               <span>
                 R$:
