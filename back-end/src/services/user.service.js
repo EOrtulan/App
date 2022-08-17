@@ -2,6 +2,7 @@ const md5 = require('md5');
 const ErrorConstructor = require('../helpers/errorConstructor');
 const generateJWT = require('../helpers/generateJWT');
 const userRepository = require('../repository/user.repository');
+const orderRepository = require('../repository/order.repository');
 
 const loginService = async (email, pass) => {
   const user = await userRepository.getUserByEmail(email);
@@ -45,8 +46,15 @@ const getSeller = async () => {
   return sellers;
 };
 
+const getSellerOrders = async (id) => {
+  const orders = await orderRepository.getSellerOrders(id);
+
+  return orders;
+}
+
 module.exports = {
   loginService,
   register,
   getSeller,
+  getSellerOrders,
 };

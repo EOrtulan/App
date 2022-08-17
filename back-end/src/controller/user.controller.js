@@ -29,8 +29,18 @@ const getSeller = async (_req, res, next) => {
   }
 };
 
+const getSellerOrders = async (req, res, next) => {
+  try {
+    const result = await userService.getSellerOrders(req.params.id);
+    return res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   loginController,
   create,
   getSeller,
+  getSellerOrders,
 };
