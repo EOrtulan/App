@@ -11,7 +11,7 @@ function OrderDetails() {
   const products = JSON.parse(getProductsSale);
 
   const requestApi = async () => {
-    const { sales } = await getOrdersId(params.id);
+    const sales = await getOrdersId(params.id);
     const date = sales.saleDate.split('T', 1).join();
     const newDate = date.split('-').reverse().join('-');
     const formatedSaleDate = { ...sales,
