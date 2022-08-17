@@ -51,15 +51,6 @@ export const getOrdersId = async (id) => {
   return response.data;
 };
 
-export const setStatus = async (id, status) => {
-  const response = await api({
-    method: 'PUT',
-    url: `/seller/orders/${id}`,
-    send: status,
-  });
-
-  return response.data;
-};
 export const getSellers = async () => {
   const response = await api({
     method: 'GET',
@@ -97,7 +88,7 @@ export const getOrders = async () => {
 export const updateState = async (id, status) => {
   const result = await api({
     method: 'PATCH',
-    url: '/orders/id',
+    url: `/orders/${id}`,
     data: status,
   });
   return result;

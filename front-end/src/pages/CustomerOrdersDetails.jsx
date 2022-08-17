@@ -28,7 +28,6 @@ function OrderDetails() {
 
   return (
     <div>
-      { console.log(sale) }
       <div>
         <Header />
       </div>
@@ -115,7 +114,7 @@ function OrderDetails() {
           data-testid="customer_order_details__element-order-total-price"
         >
           Total: R$
-          {String(totalPrice().toFixed(2)).replace('.', ',')}
+          {totalPrice()}
         </div>
       </table>
     </div>
