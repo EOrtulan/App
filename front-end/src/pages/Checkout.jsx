@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import { getSellers, saleRegister } from '../service/api';
+import { saleRegister } from '../service/api';
 
 function Checkout() {
   const navigate = useNavigate();
-  const [seller, setSeller] = useState({});
-  const [sellers, setSellers] = useState([]);
-  const [endereco, setEndereco] = useState({});
+  const [adress, setAdress] = useState('x');
+  const [number, setNumber] = useState(0);
   const [cart, setCart] = useState([]);
+  const [token, setToken] = useState('');
 
   const getSellersApi = async () => {
-    const data = await getSellers();
-    setSellers(data);
     const parseProdutos = localStorage.getItem('cart');
     const produtos = JSON.parse(parseProdutos);
     const filter = produtos.filter((prod) => prod.quantity > 0);
@@ -20,6 +18,9 @@ function Checkout() {
   };
 
   useEffect(() => {
+    const parseUser = localStorage.getItem('user');
+    const user = JSON.parse(parseUser);
+    setToken(user.token);
     getSellersApi();
   }, []);
 
@@ -38,11 +39,6 @@ function Checkout() {
     return String(total.toFixed(2)).replace('.', ',');
   };
 
-  const changeSelect = ({ target }) => {
-    const newSeller = sellers.find((item) => item.name === target.value);
-    setSeller(newSeller);
-  };
-
   async function sellRegister() {
     try {
       const user = localStorage.getItem('user');
@@ -51,13 +47,15 @@ function Checkout() {
         { productId: item.id, quantity: item.quantity }));
       const register = {
         userId: id,
-        sellerId: seller.id,
+        sellerId: 2,
         products,
         totalPrice: totalPrice().replace(',', '.'),
-        deliveryAddress: endereco.name,
-        deliveryNumber: endereco.number,
+        deliveryAddress: adress,
+        deliveryNumber: number,
       };
-      const registerOrder = await saleRegister(register);
+
+      localStorage.setItem('sale', JSON.stringify(cart));
+      const registerOrder = await saleRegister(register, token);
       navigate(`/customer/orders/${registerOrder.id}`);
     } catch (err) {
       console.log(err);
@@ -135,52 +133,46 @@ function Checkout() {
         </div>
         {' '}
       </div>
-      <div>
+      <form>
         Detalhes e Endereço para Entrega
         <label htmlFor="vendedor">
           P.Vendedor(a) Responsável
           <select
             id="vendedor"
             data-testid="customer_checkout__select-seller"
-            onChange={ changeSelect }
+            value="Fulana Pereira"
           >
-            { sellers
-             && sellers.map((item) => (
-               <option name={ item.id } key={ item.id }>
-                 { item.name }
-               </option>
-             ))}
+            <option>Fulana Pereira</option>
           </select>
         </label>
-        <label htmlFor="endereço">
+        <label htmlFor="address">
           Endereço
           <input
-            id="endereço"
+            id="addres"
+            name="address"
             data-testid="customer_checkout__input-address"
             type="text"
-            placeholder="xablau 123"
-            value={ endereco.name }
-            onChange={ (e) => setEndereco({ ...endereco, name: e.target.value }) }
+            onChange={ (e) => setAdress(e.target.value) }
           />
         </label>
-        <label htmlFor="numero">
+        <label htmlFor="number">
           Número
           <input
-            value={ endereco.number }
-            onChange={ (e) => setEndereco({ ...endereco, number: e.target.value }) }
-            id="numero"
+            id="number"
+            name="number"
             data-testid="customer_checkout__input-addressNumber"
             type="text"
+            onChange={ (e) => setNumber(e.target.value) }
           />
         </label>
         <button
           type="button"
           data-testid="customer_checkout__button-submit-order"
-          onClick={ sellRegister }
+          onClick={ () => sellRegister() }
         >
           FINALIZAR PEDIDO
         </button>
-      </div>
+      </form>
     </div>
   );
 }
