@@ -53,6 +53,7 @@ function Checkout() {
         deliveryAddress: adress,
         deliveryNumber: number,
       };
+
       localStorage.setItem('sale', JSON.stringify(cart));
       const registerOrder = await saleRegister(register, token);
       navigate(`/customer/orders/${registerOrder.id}`);

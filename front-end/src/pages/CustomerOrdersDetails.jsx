@@ -33,6 +33,7 @@ function OrderDetails() {
 
   return (
     <div>
+      { console.log(sale) }
       <div>
         <Header />
       </div>
@@ -74,7 +75,7 @@ function OrderDetails() {
           </tr>
         </thead>
         <tbody>
-          {products.map((produto, i) => (
+          {sale.products && sale.products.map((produto, i) => (
             <tr
               key={ produto.id }
               data-testid={
@@ -120,9 +121,5 @@ function OrderDetails() {
     </div>
   );
 }
-
-// OrderDetails.propTypes = {
-//   params: PropTypes.Object.isRequired,
-// };
 
 export default OrderDetails;
