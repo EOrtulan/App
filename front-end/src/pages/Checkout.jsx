@@ -168,7 +168,7 @@ function Checkout() {
         <button
           type="button"
           data-testid="customer_checkout__button-submit-order"
-          onClick={ sellRegister }
+          onClick={ () => sellRegister() }
         >
           FINALIZAR PEDIDO
         </button>
