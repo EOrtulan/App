@@ -30,16 +30,23 @@ const getSaleById = async (id) => {
   const sale = await orderRepository.getSaleById(id);
 
   const productsIds = await saleProductRepository.getByIds(id);
-
-  const arr = productsIds.map((item) => (item.dataValues.productId));
+  
+  const arr = productsIds.map((item) => ({ productId: item.dataValues.productId, quantity: item.dataValues.quantity}));
   if (!sale) throw ErrorConstructor(404, 'Product not found!');
-
+  
   const productsArr = arr
-    .map(async (item) => productRepository.getById(item));
+  .map(async (item) => productRepository.getById(item.productId));
   const saga = await Promise.all(productsArr);
-
-  const products = saga.map((item) => (item.dataValues));
-console.log(sale);
+  
+  const newProducts = saga.map((item) => (item.dataValues));
+  const products = newProducts.map((item, i) => {
+    let novo = {
+      ...item,
+      quantity: arr[i].quantity,
+    }
+    return novo;
+  })
+  console.log(newProducts);
 
   return {
     ...sale.dataValues,
