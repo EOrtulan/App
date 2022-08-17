@@ -13,6 +13,7 @@ function Checkout() {
   const getSellersApi = async () => {
     const data = await getSellers();
     setSellers(data);
+    setSeller(data[0]);
     const parseProdutos = localStorage.getItem('cart');
     const produtos = JSON.parse(parseProdutos);
     const filter = produtos.filter((prod) => prod.quantity > 0);
@@ -57,6 +58,7 @@ function Checkout() {
         deliveryAddress: endereco.name,
         deliveryNumber: endereco.number,
       };
+      console.log(register);
       const registerOrder = await saleRegister(register);
       navigate(`/customer/orders/${registerOrder.id}`);
     } catch (err) {
@@ -143,6 +145,7 @@ function Checkout() {
             id="vendedor"
             data-testid="customer_checkout__select-seller"
             onChange={ changeSelect }
+            value={ seller.name }
           >
             { sellers
              && sellers.map((item) => (
