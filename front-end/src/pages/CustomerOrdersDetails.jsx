@@ -5,16 +5,21 @@ import { getOrdersId } from '../service/api';
 
 function OrderDetails() {
   const params = useParams();
-  const [sale, setSales] = useState([]);
-  const getProducts = localStorage.getItem('cart');
-  const products = JSON.parse(getProducts);
+  const [sale, setSale] = useState([]);
+  // const [verify, setVerify] = useState(false);
+  const getProductsSale = localStorage.getItem('sale');
+  const products = JSON.parse(getProductsSale);
+
+  const requestApi = async () => {
+    const { sales } = await getOrdersId(params.id);
+    const date = sales.saleDate.split('T', 1).join();
+    const newDate = date.split('-').reverse().join('-');
+    const formatedSaleDate = { ...sales,
+      saleDate: newDate };
+    setSale(formatedSaleDate);
+  };
 
   useEffect(() => {
-    const requestApi = async () => {
-      const { sales } = await getOrdersId(params.id);
-      console.log(sales);
-      setSales(sales);
-    };
     requestApi();
   }, []);
 
@@ -23,7 +28,7 @@ function OrderDetails() {
     products.forEach((item) => {
       total += item.price * item.quantity;
     });
-    return total;
+    return String(total.toFixed(2)).replace('.', ',');
   };
 
   return (
@@ -31,46 +36,42 @@ function OrderDetails() {
       <div>
         <Header />
       </div>
-      Detalhe do Pedido
+      <h3>Detalhe do Pedido</h3>
       <div>
-        <div
-          data-testid="customer_order_details__element-order-details-label-order-id"
-        >
-          Pedido
-          {' '}
-          {sale.id}
-        </div>
-        <div
-          data-testid="customer_order_details__element-order-details-label-seller-name"
-        >
-          vendedor
-        </div>
-        <div
+        <p data-testid="customer_order_details__element-order-details-label-order-id">
+          {`Pedido: ${sale.id}`}
+        </p>
+        <p data-testid="customer_order_details__element-order-details-label-seller-name">
+          Vendedor(a): Fulana Pereira
+        </p>
+        <p
           data-testid="customer_order_details__element-order-details-label-order-date"
         >
           {sale.saleDate}
-          data
-        </div>
-        <div
+        </p>
+        <p
           data-testid="
-            customer_order_details__element-order-details-label-delivery-status"
+          customer_order_details__element-order-details-label-delivery-status"
         >
-          { sale.status}
-          status
-        </div>
-        <div
+          {sale.status}
+        </p>
+        <button
           data-testid="customer_order_details__button-delivery-check"
+          type="button"
+          // disabled={ verify }
         >
-          check
-        </div>
+          Marcar como entregue
+        </button>
       </div>
       <table>
         <thead>
-          <th>Item</th>
-          <th>Descrição</th>
-          <th>Quantidade</th>
-          <th>Valor unitario</th>
-          <th>Sub-total</th>
+          <tr>
+            <th>Item</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Valor unitario</th>
+            <th>Sub-total</th>
+          </tr>
         </thead>
         <tbody>
           {products.map((produto, i) => (
@@ -110,14 +111,12 @@ function OrderDetails() {
             </tr>
           ))}
         </tbody>
-        <div
-          data-testid="customer_order_details__element-order-total-price"
-        >
-          Total: R$
-          {/* {String(sale[0].totalPrice).replace('.', ',')} */}
-          {totalPrice()}
-        </div>
       </table>
+      <p
+        data-testid="customer_order_details__element-order-total-price"
+      >
+        {`Total: R$ ${totalPrice()}`}
+      </p>
     </div>
   );
 }
