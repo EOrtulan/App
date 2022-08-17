@@ -5,29 +5,30 @@ import { getOrdersId } from '../service/api';
 
 function OrderDetails() {
   const params = useParams();
-  const [sale, setSales] = useState([]);
-  const getProducts = localStorage.getItem('cart');
-  const products = JSON.parse(getProducts);
+  const [sale, setSales] = useState({});
 
   useEffect(() => {
     const requestApi = async () => {
-      const { sales } = await getOrdersId(params.id);
-      console.log(sales);
-      setSales(sales);
+      const data = await getOrdersId(params.id);
+      console.log(data.products);
+      setSales(data);
     };
     requestApi();
   }, []);
 
   const totalPrice = () => {
-    let total = 0;
-    products.forEach((item) => {
-      total += item.price * item.quantity;
-    });
-    return total;
+    if (sale.products) {
+      let total = 0;
+      sale.products.forEach((item) => {
+        total += item.price * item.quantity;
+      });
+      return String(total).replace('.', ',');
+    }
   };
 
   return (
     <div>
+      { console.log(sale) }
       <div>
         <Header />
       </div>
@@ -73,7 +74,7 @@ function OrderDetails() {
           <th>Sub-total</th>
         </thead>
         <tbody>
-          {products.map((produto, i) => (
+          {sale.products && sale.products.map((produto, i) => (
             <tr
               key={ produto.id }
               data-testid={
@@ -114,16 +115,11 @@ function OrderDetails() {
           data-testid="customer_order_details__element-order-total-price"
         >
           Total: R$
-          {/* {String(sale[0].totalPrice).replace('.', ',')} */}
           {totalPrice()}
         </div>
       </table>
     </div>
   );
 }
-
-// OrderDetails.propTypes = {
-//   params: PropTypes.Object.isRequired,
-// };
 
 export default OrderDetails;
