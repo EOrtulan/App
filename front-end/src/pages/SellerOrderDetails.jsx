@@ -1,39 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import SellerHeader from '../components/SellerHeader';
-import { getOrdersId } from '../service/api';
+import { getOrdersId, updateState } from '../service/api';
 
 function SellerOrderDetails() {
   const params = useParams();
   const [sale, setSales] = useState([]);
-  // const [prepar, setPreparar] = useState(false);
-  // const [saiu, setSaiu] = useState(true);
-  const getProducts = localStorage.getItem('cart');
-  const products = JSON.parse(getProducts);
+  const [preparar, setPreparar] = useState(false);
+  const [saiu, setSaiu] = useState(true);
 
   useEffect(() => {
     const requestApi = async () => {
-      const { sales } = await getOrdersId(params.id);
-      setSales(sales);
+      const data = await getOrdersId(params.id);
+      setSales(data);
     };
-
     requestApi();
   }, []);
 
   const totalPrice = () => {
-    let total = 0;
-    products.forEach((item) => {
-      total += item.price * item.quantity;
-    });
-    return total;
+    if (sale.products) {
+      let total = 0;
+      sale.products.forEach((item) => {
+        total += item.price * item.quantity;
+      });
+      return String(total).replace('.', ',');
+    }
   };
 
-  // const changeStatus = async (status) => {
-  //   await setStatus(params.id, status);
-  //   if (status === 'preparando') {
-  //     setPreparar(true)
-  //   }
-  // };
+  const changeStatus = async (status) => {
+    await updateState(params.id, status);
+    const data = await getOrdersId(params.id);
+    setSales(data);
+
+    if (status === 'Preparando') {
+      setPreparar(true);
+      setSaiu(false);
+    }
+    if (status === 'Em Trânsito') {
+      setSaiu(true);
+    }
+  };
 
   return (
     <div>
@@ -41,7 +47,6 @@ function SellerOrderDetails() {
         <SellerHeader />
       </div>
       Detalhe do Pedido
-      {console.log(sale)}
       <div>
         <div
           data-testid="seller_order_details__element-order-details-label-order-id"
@@ -66,7 +71,7 @@ function SellerOrderDetails() {
           name="Preparando"
           data-testid="seller_order_details__button-preparing-check"
           onClick={ (e) => changeStatus(e.target.name) }
-          disabled={ sale.status !== 'Pendete' }
+          disabled={ preparar }
 
         >
           PREPARAR PEDIDO
@@ -76,7 +81,7 @@ function SellerOrderDetails() {
           name="Em Trânsito"
           data-testid="seller_order_details__button-dispatch-check"
           onClick={ (e) => changeStatus(e.target.name) }
-          disabled={ sale.status !== 'Preparando' }
+          disabled={ saiu }
         >
           SAIU PARA ENTREGA
         </button>
@@ -90,7 +95,7 @@ function SellerOrderDetails() {
           <th>Sub-total</th>
         </thead>
         <tbody>
-          {products.map((produto, i) => (
+          {sale.products && sale.products.map((produto, i) => (
             <tr
               key={ produto.id }
             >
@@ -135,7 +140,7 @@ function SellerOrderDetails() {
           data-testid="seller_order_details__element-order-total-price"
         >
           Total: R$
-          {String(totalPrice().toFixed(2)).replace('.', ',')}
+          {totalPrice()}
         </div>
       </table>
     </div>
