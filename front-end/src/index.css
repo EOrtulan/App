@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +14,25 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.greenBackGroundCollor {
+  background-color: #036B52;
+}
+
+.greenCollor {
+  color: #036B52;
+}
+
+.greenBorderCollor {
+  border-color: #036B52;
+}
+
+.backLogin {
+  background-color: #F2FFFC;
 }

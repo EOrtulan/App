@@ -33,64 +33,86 @@ function LoginPage() {
   }, []);
 
   return (
-    <div>
-      <div>
-        <label htmlFor="email">
-          Login:
-          <input
-            id="email"
-            type="text"
-            name="email"
-            value={ user.email }
-            onChange={ (e) => setUser({
-              ...user,
-              email: e.target.value }) }
-            data-testid="common_login__input-email"
-          />
-        </label>
+    <div
+      className="h-screen w-screen items-center
+     justify-center flex greenBackGroundCollor"
+    >
+      <div
+        className="flex flex-col justify-between h-full max-h-72
+         shadow-2xl p-8 backLogin rounded-md"
+      >
+        <div>
+          <div>
+            Login
+          </div>
+          <div className="w-60">
+            <input
+              className="border-solid border-1
+               border-black w-full leading-10 rounded pl-4"
+              id="email"
+              type="text"
+              name="email"
+              placeholder="hulkesmaga@gmail.com"
+              value={ user.email }
+              onChange={ (e) => setUser({
+                ...user,
+                email: e.target.value }) }
+              data-testid="common_login__input-email"
+            />
+          </div>
+        </div>
+        <div>
+          <div>
+            Senha
+          </div>
+          <div className="w-60">
+            <input
+              className="border-solid border-1
+               border-black w-full leading-10 rounded pl-4"
+              id="password"
+              type="password"
+              placeholder="************"
+              name="password"
+              value={ user.password }
+              onChange={ (e) => setUser({
+                ...user,
+                password: e.target.value }) }
+              data-testid="common_login__input-password"
+            />
+          </div>
+        </div>
+        <div className="flex justify-center w-60">
+          <button
+            className="border-solid border-1 border-black
+             cursor-pointer w-full leading-8 rounded-md text-white greenBackGroundCollor"
+            type="button"
+            data-testid="common_login__button-login"
+            disabled={ dataValidator(user.email, user.password) }
+            onClick={ onSubmitButton }
+          >
+            Login
+          </button>
+        </div>
+        <div className="flex justify-center w-60">
+          <button
+            className="border-solid border-1 border-black cursor-pointer
+             w-full leading-8 rounded-md greenCollor greenBorderCollor"
+            type="button"
+            data-testid="common_login__button-register"
+            onClick={ () => navigate('/register') }
+          >
+            Ainda não tenho conta
+          </button>
+        </div>
+        {
+          notFoundEmail
+          && (
+            <alert data-testid="common_login__element-invalid-email">
+              Email not found
+            </alert>
+          )
+        }
       </div>
-      <div>
-        <label htmlFor="password">
-          Senha:
-          <input
-            id="password"
-            type="password"
-            name="password"
-            value={ user.password }
-            onChange={ (e) => setUser({
-              ...user,
-              password: e.target.value }) }
-            data-testid="common_login__input-password"
-          />
-        </label>
-      </div>
-      <div>
-        <button
-          type="button"
-          data-testid="common_login__button-login"
-          disabled={ dataValidator(user.email, user.password) }
-          onClick={ onSubmitButton }
-        >
-          Login
-        </button>
-      </div>
-      <div>
-        <button
-          type="button"
-          data-testid="common_login__button-register"
-          onClick={ () => navigate('/register') }
-        >
-          Ainda não tenho conta
-        </button>
-      </div>
-      {
-        notFoundEmail
-        && (
-          <alert data-testid="common_login__element-invalid-email">
-            Email not found
-          </alert>
-        )
-      }
     </div>
   );
 }
