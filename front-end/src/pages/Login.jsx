@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import login from '../service/api';
 import dataValidator, { redirectRole } from '../utils';
+import logo from '../asserts/logo.png';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -35,8 +36,11 @@ function LoginPage() {
   return (
     <div
       className="h-screen w-screen items-center
-     justify-center flex primarioBackground"
+     justify-center flex flex-col primarioBackground"
     >
+      <div className="w-64 h-64">
+        <img src={ logo } alt="logo" />
+      </div>
       <div
         className="flex flex-col justify-between h-full max-h-72
          shadow-2xl p-8 backGroundGreyLogin rounded-md"

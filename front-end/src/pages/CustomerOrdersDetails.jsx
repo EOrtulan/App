@@ -22,7 +22,7 @@ function OrderDetails() {
       sale.products.forEach((item) => {
         total += item.price * item.quantity;
       });
-      return String(total).replace('.', ',');
+      return String(total.toFixed(2)).replace('.', ',');
     }
   };
 
@@ -58,8 +58,9 @@ function OrderDetails() {
               className="font-bold"
               data-testid="customer_order_details__element-order-details-label-order-date"
             >
-              {sale.saleDate}
-
+              {sale.saleDate && (
+                formatedDate(sale.saleDate)
+              )}
             </div>
             <div
               className="backgroundOrange font-bold rounded-md p-1 uppercase w-48 text-center"
@@ -145,7 +146,7 @@ function OrderDetails() {
               >
                 Total: R$
                 {' '}
-                {Number(totalPrice())}
+                {totalPrice()}
               </div>
             </div>
           </table>

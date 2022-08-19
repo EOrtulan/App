@@ -41,14 +41,22 @@ function SellerOrderDetails() {
     }
   };
 
+  const formatedDate = (date) => {
+    const dateSplit = date.split('T', 1).join();
+    const newDate = dateSplit.split('-').reverse().join('/');
+    return newDate.replace('-', '/');
+  };
+
   return (
-    <div>
-      <div>
+    <div className="h-screen w-screen">
         <SellerHeader />
+        <div className="flex flex-col my-8 mx-20 justify-center">
+      <div  className="text-2xl">
+        Detalhe do Pedido
       </div>
-      Detalhe do Pedido
-      <div>
+      <div className="shadow-10xl p-4">
         <div
+          className="flex justify-between text-xxl backGroundGreyLogin p-2 mb-2"
           data-testid="seller_order_details__element-order-details-label-order-id"
         >
           Pedido
@@ -58,7 +66,9 @@ function SellerOrderDetails() {
         <div
           data-testid="seller_order_details__element-order-details-label-order-date"
         >
-          {sale.saleDate}
+          {sale.saleDate && (
+            formatedDate(sale.saleDate)
+          )}
         </div>
         <div
           data-testid="
@@ -143,6 +153,7 @@ function SellerOrderDetails() {
           {totalPrice()}
         </div>
       </table>
+      </div>
     </div>
   );
 }
