@@ -47,7 +47,9 @@ function SellerOrders() {
                   <div className="flex">
                     <div
                       data-testid={ `seller_orders__element-delivery-status-${order.id}` }
-                      className="flex border-solid rounded-md items-center secundarioBackground pl-5 pr-5 text-sm mr-1"
+                      className={ `flex border-solid rounded-md items-center pl-5 pr-5 text-sm mr-1
+                       ${order.status === 'Pendente' && 'amareloBackground'} ${order.status === 'Em Trânsito' && 'primarioBackground'}
+                       ${order.status === 'Preparando' && 'secundarioBackground'}`}
                     >
                       {order.status}
                     </div>

@@ -18,7 +18,7 @@ function SellerHeader() {
     <div className="flex w-full flex-row">
       <div className="leading-10 basis-1/4 flex justify-center secundarioBackground p-1">
         <Link
-          to="/customer/products"
+          to="/seller/orders"
           data-testid="customer_products__element-navbar-link-products"
         >
           Pedidos
