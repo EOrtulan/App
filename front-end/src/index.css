@@ -77,6 +77,10 @@ a {
   background-color:#EAF1EF;
   }
 
+.backgroundOrange {
+  background-color: #CCB800;
+}
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
