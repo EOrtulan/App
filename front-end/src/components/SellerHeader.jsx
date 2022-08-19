@@ -24,7 +24,7 @@ function SellerHeader() {
           Pedidos
         </Link>
       </div>
-      <div className="leading-10 basis-2/4 primarioBackground pl-10 p-1"></div>
+      <div className="leading-10 basis-2/4 primarioBackground pl-10 p-1" />
       <div
         className="leading-10 basis-1/4 p-1
         flex justify-center colorTextLight terciarioBackground"
@@ -41,7 +41,7 @@ function SellerHeader() {
           onClick={ () => localStorage.removeItem('user') }
           data-testid="customer_products__element-navbar-link-logout"
         >
-          sair
+          Sair
         </Link>
       </div>
     </div>

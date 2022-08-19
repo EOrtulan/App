@@ -23,7 +23,7 @@ function CustomerOrders() {
   return (
     <div className="h-screen w-screen">
       <Header />
-      <div className="flex-wrap flex my-8 mx-20">
+      <div className="flex-wrap flex my-8 mx-20 justify-center items-center">
         {orders
         && orders.map((order, i) => (
           <Link key={ i } to={ `/customer/orders/${order.id}` }>
@@ -64,6 +64,7 @@ function CustomerOrders() {
                   >
                     R$:
                     {' '}
+                    {console.log(order.totalPrice)}
                     {(order.totalPrice).replace('.', ',')}
                   </div>
                 </div>

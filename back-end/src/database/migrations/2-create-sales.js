@@ -28,7 +28,7 @@ module.exports = {
       },
       totalPrice: {
         allowNull: false,
-        type: Sequelize.DECIMAL(4, 2),
+        type: Sequelize.DECIMAL(6, 2),
         field: 'total_price',
       },
       deliveryAddress: {

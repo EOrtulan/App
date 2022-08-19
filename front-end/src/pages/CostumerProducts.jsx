@@ -149,21 +149,24 @@ function Products() {
           ))
         )}
         <div
-          className="p-2 fixed mt-70 ml-ml75
+          className="p-2 fixed mb-20 ml-ml75
         primarioBackground text-white border-solid rounded-md"
         >
-          <button
-            type="button"
-            onClick={ () => checkout() }
-            data-testid="customer_products__button-cart"
-            disabled={ valueCar() === '0,00' }
-          >
-            Ver Carrinho: R$
-            {' '}
-            <span data-testid="customer_products__checkout-bottom-value">
-              {valueCar()}
-            </span>
-          </button>
+          {produtos && (
+            <button
+              type="button"
+              onClick={ () => checkout() }
+              data-testid="customer_products__button-cart"
+              disabled={ valueCar() === '0,00' }
+            >
+              Ver Carrinho: R$
+              {' '}
+              <span data-testid="customer_products__checkout-bottom-value">
+                {valueCar()}
+              </span>
+            </button>
+          )}
+
         </div>
       </div>
     </div>

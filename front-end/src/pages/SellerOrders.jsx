@@ -26,7 +26,7 @@ function SellerOrders() {
   return (
     <div className="h-screen w-screen">
       <SellerHeader />
-      <div className="flex-wrap flex my-8 mx-20">
+      <div className="flex-wrap flex my-8 mx-20 justify-center items-center">
         {orders
         && orders.map((order, i) => (
           <Link key={ i } to={ `/seller/orders/${order.id}` }>
