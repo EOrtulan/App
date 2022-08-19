@@ -80,7 +80,7 @@ function Products() {
             >
               <div
                 className="absolute flex p-1
-                border-solid rounded-md backGroundTextLight ColorTextDark mb-52 mr-32"
+                border-solid rounded-md backGroundTextLight ColorTextDark mb-42 mr-32"
               >
                 R$
                 {' '}

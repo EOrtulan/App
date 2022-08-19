@@ -13,7 +13,6 @@ const screens = {
 };
 
 const maxHeight = {
-  0: '0px',
   0.5: '0.125rem',
   1: '0.25rem',
   1.5: '0.375rem',
@@ -81,6 +80,7 @@ const margin = {
   20: '5rem',
   24: '6rem',
   32: '8rem',
+  42: '12rem',
   mt37: '41%',
   ml75: '86%',
   '-px': '-1px',
