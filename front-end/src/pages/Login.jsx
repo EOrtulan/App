@@ -35,11 +35,11 @@ function LoginPage() {
   return (
     <div
       className="h-screen w-screen items-center
-     justify-center flex greenBackGroundCollor"
+     justify-center flex primarioBackground"
     >
       <div
         className="flex flex-col justify-between h-full max-h-72
-         shadow-2xl p-8 backLogin rounded-md"
+         shadow-2xl p-8 backGroundGreyLogin rounded-md"
       >
         <div>
           <div>
@@ -84,7 +84,7 @@ function LoginPage() {
         <div className="flex justify-center w-60">
           <button
             className="border-solid border-1 border-black
-             cursor-pointer w-full leading-8 rounded-md text-white greenBackGroundCollor"
+             cursor-pointer w-full leading-8 rounded-md text-white primarioBackground"
             type="button"
             data-testid="common_login__button-login"
             disabled={ dataValidator(user.email, user.password) }
@@ -96,7 +96,7 @@ function LoginPage() {
         <div className="flex justify-center w-60">
           <button
             className="border-solid border-1 border-black cursor-pointer
-             w-full leading-8 rounded-md greenCollor greenBorderCollor"
+             w-full leading-8 rounded-md backGroundGrey primarioBorderCollor"
             type="button"
             data-testid="common_login__button-register"
             onClick={ () => navigate('/register') }

@@ -21,18 +21,71 @@ a {
   color: inherit;
 }
 
-.greenBackGroundCollor {
-  background-color: #036B52;
-}
-
-.greenCollor {
+.primarioCollor {
   color: #036B52;
 }
 
-.greenBorderCollor {
+.primarioBorderCollor {
   border-color: #036B52;
 }
 
-.backLogin {
+.primarioBackground {
+  background-color: #036B52;
+}
+
+.secundarioCollor {
+  color: #2FC18C;
+}
+
+.secundarioBackground {
+  background-color: #2FC18C;
+}
+
+.terciarioCollor {
+  color:  #421981;
+}
+
+.terciarioBackground {
+  background-color: #421981;
+}
+
+.quaternarioCollor {
+  color: #056CF9;
+}
+
+.quaternarioBackground {
+  background-color: #056CF9;
+}
+
+.colorTextLight {
+  color: #F2FFFC;
+}
+
+.backGroundTextLight {
   background-color: #F2FFFC;
+}
+
+.ColorTextDark {
+  color: #001813;
+}
+
+.backGroundGrey {
+  background-color:#BED8E8;
+  } 
+
+.backGroundGreyLogin {
+  background-color:#F2FFFC;
+  } 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+img {
+  height: 100%;
+  width: 100%;
 }

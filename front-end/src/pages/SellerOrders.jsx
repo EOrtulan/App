@@ -24,42 +24,59 @@ function SellerOrders() {
   };
 
   return (
-    <div>
+    <div className="h-screen w-screen">
       <SellerHeader />
-      <div>
+      <div className="flex-wrap flex my-8 mx-20">
         {orders
         && orders.map((order, i) => (
           <Link key={ i } to={ `/seller/orders/${order.id}` }>
-            <div>
+            <div className="flex shadow-10xl my-2 mr-4">
               <div
                 data-testid={ `seller_orders__element-order-id-${order.id}` }
+                className="flex flex-col p-7 justify-center"
               >
-                Pedido
-                {' '}
-                {order.id}
-              </div>
-              <div
-                data-testid={ `seller_orders__element-delivery-status-${order.id}` }
-              >
-                {order.status}
+                <div className="text-xs">
+                  Pedido
+                </div>
+                <div className="flex justify-center text-sm">
+                  {order.id}
+                </div>
               </div>
               <div>
-                <div
-                  data-testid={ `seller_orders__element-order-date-${order.id}` }
-                >
-                  {formatedDate(order.saleDate)}
-                </div>
-                <div data-testid={ `seller_orders__element-card-price-${order.id}` }>
-                  R$
-                  {' '}
-                  {(order.totalPrice).replace('.', ',')}
-                </div>
-                <div
-                  data-testid={ `seller_orders__element-card-address-${order.id}` }
-                >
-                  {order.deliveryAddress}
-                  ,
-                  {order.deliveryNumber}
+                <div className="backGroundGrey p-1">
+                  <div className="flex">
+                    <div
+                      data-testid={ `seller_orders__element-delivery-status-${order.id}` }
+                      className="flex border-solid rounded-md items-center secundarioBackground pl-5 pr-5 text-sm mr-1"
+                    >
+                      {order.status}
+                    </div>
+                    <div>
+                      <div
+                        data-testid={ `seller_orders__element-order-date-${order.id}` }
+                        className="w-full items-center border-solid rounded-md justify-center text-sm backGroundTextLight px-5 py-1 mb-1"
+                      >
+                        {formatedDate(order.saleDate)}
+                      </div>
+                      <div
+                        data-testid={ `seller_orders__element-card-price-${order.id}` }
+                        className="flex w-full border-solid rounded-md items-center justify-center text-sm backGroundTextLight px-5 py-1"
+                      >
+                        R$
+                        {' '}
+                        {(order.totalPrice).replace('.', ',')}
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-testid={ `seller_orders__element-card-address-${order.id}` }
+                    className="text-right text-sm p-1 border-solid rounded-md"
+                  >
+                    {order.deliveryAddress}
+                    ,
+                    {' '}
+                    {order.deliveryNumber}
+                  </div>
                 </div>
               </div>
             </div>

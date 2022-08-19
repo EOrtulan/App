@@ -48,6 +48,7 @@ const maxHeight = {
   72: '18rem',
   76: '19rem',
   78: '20rem',
+  80: '21rem',
   96: '31rem',
   97: '32rem',
   106: '26rem',
@@ -56,29 +57,38 @@ const maxHeight = {
   screen: '100vh',
 };
 
-const minHeight = {
+const margin = {
+  auto: 'auto',
+  px: '1px',
+  base: '2.2rem',
   0: '0',
   1: '0.25rem',
+  1.5: '0.4rem',
   2: '0.5rem',
+  2.5: '0.625rem',
   3: '0.75rem',
+  3.5: '0.875rem',
   4: '1rem',
   5: '1.25rem',
   6: '1.5rem',
+  7: '1.75rem',
   8: '2rem',
+  9: '2.25rem',
   10: '2.5rem',
+  11: '2.75rem',
   12: '3rem',
   16: '4rem',
+  20: '5rem',
   24: '6rem',
   32: '8rem',
-  48: '12rem',
-  64: '16rem',
-  72: '18rem',
-  80: '20rem',
-  96: '24rem',
-  97: '25rem',
-  100: '31rem',
-  full: '100%',
-  screen: '100vh',
+  mt37: '41%',
+  ml75: '86%',
+  '-px': '-1px',
+  '-1': '-0.25rem',
+  '-2': '-0.5rem',
+  '-3': '-0.75rem',
+  '-4': '-1rem',
+  '-9': '-2.25rem',
 };
 
 const height = {
@@ -106,6 +116,7 @@ const height = {
   42: '11rem',
   45: '11.75rem',
   48: '12rem',
+  50: '13rem',
   52: '15rem',
   64: '16rem',
   68: '17rem',
@@ -156,22 +167,11 @@ const colors = {
   'gray-bg': '#F3F2F7',
   'gray-icon': '#D8D6DE',
   'orange-500': '#FF9F43',
-  'orange-100': '#ff9f432e',
-  'green-100': '#28c76f1f',
-  'red-100': '#ea54551f',
-  'red-light': '#ff5f60',
-  'red-600': '#FFEFF0',
-  'blue-100': '#54c8e81f',
-  'gray-100': '#0000001f',
-  'gray-200': '#f0f0f166',
-  'grey-300': '#E9ECEF',
-  'grey-500': '#828487',
-  'grey-600': '#636569',
-  'grey-700': '#4A4C4F',
 };
 
 const padding = {
-  px: '1px',
+  px1: '1px',
+  px9: '9px',
   base: '2.2rem',
   0: '0',
   1: '0.25rem',
@@ -196,6 +196,12 @@ for (let i = 0; i < 100; i += 1) {
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
+    extend: {
+      boxShadow: {
+        '10xl': '0px 0px 16px 4px rgba(0,0,0,0.1)',
+      },
+    },
+    margin,
     fontSize: {
       x: '.63rem', // 10px
       xs: '.75rem', // 12px
@@ -209,13 +215,10 @@ module.exports = {
       '2xl': '1.5rem', // 24px
       '3xl': '1.875rem', // 30px
       '4xl': '2.25rem', // 36px
-      '5xl': '3rem', // 48px
-      '6xl': '4rem', // 64px
     },
     backgroundColor: (theme) => theme('colors'),
     padding,
     maxHeight,
-    minHeight,
     maxWidth: {
       7: '7rem',
       9: '9rem',

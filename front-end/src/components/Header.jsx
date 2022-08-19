@@ -16,16 +16,18 @@ function Header() {
 
   return (
     <div className="flex w-full flex-row">
-      <div className="leading-10">
+      <div className="leading-10 basis-1/4 flex justify-center secundarioBackground p-1">
         <Link
+          className="ColorTextDark"
           to="/customer/products"
           data-testid="customer_products__element-navbar-link-products"
         >
           Produtos
         </Link>
       </div>
-      <div>
+      <div className="leading-10 basis-2/4 primarioBackground pl-10 p-1">
         <Link
+          className="colorTextLight"
           to="/customer/orders"
           data-testid="customer_products__element-navbar-link-orders"
         >
@@ -33,17 +35,20 @@ function Header() {
         </Link>
       </div>
       <div
+        className="leading-10 basis-1/4 p-1
+         flex justify-center colorTextLight terciarioBackground"
         data-testid="customer_products__element-navbar-user-full-name"
       >
         { dataUser }
       </div>
-      <div>
+      <div className="leading-10 basis-1/12 flex justify-center basis-2/12 p-1 quaternarioBackground">
         <Link
+          className="colorTextLight"
           to="/login"
           onClick={ () => localStorage.removeItem('user') }
           data-testid="customer_products__element-navbar-link-logout"
         >
-          sair
+          Sair
         </Link>
       </div>
     </div>
